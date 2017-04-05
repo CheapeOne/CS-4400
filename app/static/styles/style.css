@@ -4,15 +4,11 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 1rem;
 }
 
-.header {
-    color: #536DFE;
-}
-
-.subheader {
+.gold {
     color: #FFA000;
 }
 
-.text {
+.black {
     color: #212121;
 }
 
@@ -37,6 +33,9 @@ h1, h2, h3, h4, h5, h6 {
 .container {
     margin-top: 0px;
     padding-top: 1px;
+    width: 100%;
+    height: 1000px;
+    background-image:url("/static/images/slscommunity.jpg");
 }
 
 .logo {
@@ -64,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
 	border:1px solid #212121;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color:#212121;
 	font-family:Arial;
 	font-size:17px;
 	padding:16px 31px;

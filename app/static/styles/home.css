@@ -1,9 +1,3 @@
-.container {
-    width: 100%;
-    height: 1000px;
-    background-image:url("/static/images/slscommunity.jpg");
-}
-
 #top, #middle, #bottom {
     background-color: white;
     padding: 10px;
