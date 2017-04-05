@@ -7,3 +7,42 @@ h1, h2, h3, h4, h5, h6 {
   content: url("http://etv.gatech.edu/wp-content/themes/etv-theme/gt-logo.png");
 }
 
+.header {
+    color: #536DFE;
+}
+
+.subheader {
+    color: #FFA000;
+}
+
+.text {
+    color: #212121;
+}
+
+.blackoutline {
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.accentoutline {
+    text-shadow:
+    -1px -1px 0 #FFC107,
+    1px -1px 0 #FFC107,
+    -1px 1px 0 #FFC107,
+    1px 1px 0 #FFC107;
+}
+
+.tier {
+    box-shadow:
+    5px 5px #888,
+    -5px -5px #888,
+    -5px 5px red,
+    5px -5px red;
+}
+
+.tier:hover {
+    background-color: #EFEFEF !important;
+}
