@@ -1,0 +1,9 @@
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1rem;
+}
+
+.logo {
+  height: 30px;
+  content: url("http://etv.gatech.edu/wp-content/themes/etv-theme/gt-logo.png");
+}
+

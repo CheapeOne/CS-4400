@@ -1,0 +1,42 @@
+body {
+    background-image:url("/static/slscommunity.jpg");
+}
+
+#top, #middle, #bottom {
+    background-color: lightblue;
+    padding: 10px;
+    margin: 20px;
+    border: 5px dotted #FFA000;
+    border-radius: 2px;
+    outline: #FFC107 dotted thick;
+}
+
+
+.header {
+    color: #FFA000;
+}
+
+.subheader {
+    color: #536DFE;
+}
+
+.text {
+    color: #212121;
+}
+
+
+.blackoutline {
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.accentoutline {
+    text-shadow:
+    -1px -1px 0 #FFC107,
+    1px -1px 0 #FFC107,
+    -1px 1px 0 #FFC107,
+    1px 1px 0 #FFC107;
+}
