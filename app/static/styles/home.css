@@ -1,5 +1,7 @@
-#slscommunity {
-    background-image:url("/static/slscommunity.jpg");
+.container {
+    width: 100%;
+    height: 1000px;
+    background-image:url("/static/images/slscommunity.jpg");
 }
 
 #top, #middle, #bottom {
@@ -8,14 +10,4 @@
     margin: 20px;
     border: 3px dotted #FFA000;
     border-radius: 10px;
-}
-
-#middle {
-
-}
-
-.container {
-    width: 100%;
-    height: 1000px;
-    background-image:url("/static/slscommunity.jpg");
 }
