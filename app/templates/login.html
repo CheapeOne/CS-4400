@@ -7,15 +7,20 @@
 
 
 <div class="tier" id="top">
-    <h1>Login</h1>
+    <label><b>Username</b></label>
+    <input class="input" type="text" placeholder="Enter Username" name="uname" required>
 </div>
 
 <div class="tier" id="middle">
-    <h1>Register</h1>
+    <label><b>Password</b></label>
+    <input class="input" type="password" placeholder="Enter Password" name="psw" required>
 </div>
 
 <div class="tier" id="bottom">
-
+    <button type="submit">Login</button>
+    <div id="rememberme">
+        <input class="checkbox" type="checkbox" checked="checked">Remember me
+    </div>
 </div>
 
 {%- endblock content %}

@@ -2,19 +2,15 @@
     background-color: white;
     border: 3px dotted #FFA000;
     border-radius: 10px;
-}
-
-#top {
     padding: 10px;
     margin: 20px;
 }
 
-#middle {
-    float: left;
-    margin-left:20px;
+#bottom {
+    display:inline-block;
 }
 
-#bottom {
-    float: right;
-    margin-right: 20px;
+input.input {
+    width:87%;
+    float:right;
 }
