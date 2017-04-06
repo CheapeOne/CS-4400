@@ -9,15 +9,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .black {
-    color: #212121;
+    color: #292b2c;
 }
 
 .blackoutline {
     text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+    -1px -1px 0 #292b2c,
+    1px -1px 0 #292b2c,
+    -1px 1px 0 #292b2c,
+    1px 1px 0 #292b2c;
 }
 
 .accentoutline {
@@ -33,6 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 a {
     text-decoration: none;
 }
+
 .container {
     margin-top: 0px;
     padding-top: 1px;
@@ -52,10 +53,24 @@ a {
     -5px -5px #FFC107,
     -5px 5px #212121,
     5px -5px #212121;
+    background-color: white;
 }
 
 .tier:hover {
     background-color: #EFEFEF !important;
+}
+
+.tier-round {
+    box-shadow:
+    5px 5px #FFC107,
+    -5px -5px #FFC107,
+    -5px 5px #212121,
+    5px -5px #212121;
+    background-color: white;
+    border: 3px dotted #FFA000;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
 }
 
 .button {

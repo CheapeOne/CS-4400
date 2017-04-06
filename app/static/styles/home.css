@@ -1,20 +1,4 @@
-#top, #middle, #bottom {
-    background-color: white;
-    border: 3px dotted #FFA000;
-    border-radius: 10px;
-}
-
-#top {
-    padding: 10px;
-    margin: 20px;
-}
-
-#middle {
+.button {
     float: left;
     margin-left:20px;
-}
-
-#bottom {
-    float: right;
-    margin-right: 20px;
 }
