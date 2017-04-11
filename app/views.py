@@ -13,11 +13,36 @@ def login():
 def register():
     return render_template('register.html')
 
+# These should only be accessible if you have city scientist authorization   
+
+@app.route('/city-scientist')
+def city_scientist():
+    return render_template('city-scientist.html') 
+
+@app.route('/city-scientist/add-point')
+def add_point():
+    return render_template('add-point.html')
+
+@app.route('/city-scientist/add-location')
+def add_location():
+    return render_template('add-location.html')
+
+# These should only be accessible if you have city official authorization
+
+@app.route('/city-official')
+def city_official():
+    return render_template('city-official.html')   
+
+# These should only be accessible if you have admin authorization
+
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
 
-@app.route('/user/')
-@app.route('/user/<name>')
-def user(name=None):
-    return render_template('index.html', name=name)
+@app.route('/admin/pending-points')
+def pending_points():
+    return render_template('pending-points.html')
+
+@app.route('/admin/pending-accounts')
+def pending_accounts():
+    return render_template('pending-accounts.html')

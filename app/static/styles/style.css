@@ -1,15 +1,13 @@
+:root {
+    --gold: #FFA000;
+    --dark-gold: #cc8000;
+    --black: #292b2c;
+}
+
 /* GENERIC MODIFIERS */
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 1rem;
-}
-
-.gold {
-    color: #FFA000;
-}
-
-.black {
-    color: #292b2c;
 }
 
 .blackoutline {
@@ -21,11 +19,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .accentoutline {
-    text-shadow:
-    -1px -1px 0 #FFC107,
-    1px -1px 0 #FFC107,
-    -1px 1px 0 #FFC107,
-    1px 1px 0 #FFC107;
+    color: var(--gold);
+    font-weight: 600;
 }
 
 /* SPECIFIC MODIFIERS */
@@ -35,11 +30,7 @@ a {
 }
 
 .container {
-    margin-top: 0px;
-    padding-top: 1px;
-    width: 100%;
     height: 1000px;
-    background-image:url("/static/images/slscommunity.jpg");
 }
 
 .logo {
@@ -90,4 +81,35 @@ a {
 .button:active {
 	position:relative;
 	top:1px;
+}
+
+.btn-primary {
+    background-color: var(--gold);
+    border-color: var(--dark-gold);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-gold);
+    border-color: var(--dark-gold);
+}
+
+.landing-image::after {
+    content: url("/static/images/slscommunity.jpg");
+}
+
+.home-card {
+    border: none;
+}
+
+.card h4 {
+    margin-top: 0px;
+}
+
+.card-img-top {
+    width:100%;
+}
+
+.footer {
+    color: grey;
+    text-align: center;
 }

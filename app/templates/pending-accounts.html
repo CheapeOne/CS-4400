@@ -1,0 +1,46 @@
+{% extends "base.html" -%}
+
+{% block content -%}
+
+<div class="row justify-content-md-center">
+
+    <div class="col-md-8">
+
+        <h1 class="black">Pending City Officials</h1>
+        <br>
+
+        <div class="card">
+          <div class="card-block">
+            <h4 class="card-title"></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Title</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Pearson</th>
+                        <th>pearson@gatech.edu</th>
+                        <th>Atlanta</th>
+                        <th>GA</th>
+                        <th>Mayor</th>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#" class="card-link btn btn-success">Accept</a>
+            <a href="#" class="card-link btn btn-danger">Reject</a>
+          </div>
+        </div>
+
+    </div>
+
+</div>
+
+{%- endblock content %}
+
+

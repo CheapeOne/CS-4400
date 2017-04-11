@@ -1,0 +1,52 @@
+{% extends "base.html" -%}
+
+{% block content -%}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+
+        <h1 class="black">Add a POI Location</h1>
+
+        <div class="card">
+            <div class="card-block">
+            <form>
+
+                <div class="form-group">
+                    <label for="nameInput">POI Location Name</label>
+                    <input type="text" class="form-control" id="nameInput" placeholder="Enter the location's name">
+                </div>
+
+                <div class="form-group">
+                    <label for="cityInput">City</label>
+                    <select class="form-control" id="cityInput">
+                        <option>Atlanta</option>
+                        <option>(We'll grab all these from DB)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="stateInput">State</label>
+                    <select class="form-control" id="stateInput">
+                        <option>Georgia</option>
+                        <option>(We'll grab all these from DB)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="zipInput">Zip Code</label>
+                    <input type="text" pattern="[0-9]{5}" class="form-control" id="zipInput" placeholder="Enter the location's zip code">          
+                </div>
+
+                 <button type="submit" class="btn btn-warning">Submit
+                 </button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%- endblock content %}
+
+
+
+
