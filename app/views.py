@@ -17,32 +17,40 @@ def register():
 
 @app.route('/city-scientist')
 def city_scientist():
-    return render_template('city-scientist.html') 
+    return render_template('city-scientist/city-scientist.html')
 
 @app.route('/city-scientist/add-point')
 def add_point():
-    return render_template('add-point.html')
+    return render_template('city-scientist/add-point.html')
 
 @app.route('/city-scientist/add-location')
 def add_location():
-    return render_template('add-location.html')
+    return render_template('city-scientist/add-location.html')
 
 # These should only be accessible if you have city official authorization
 
 @app.route('/city-official')
 def city_official():
-    return render_template('city-official.html')   
+    return render_template('city-official/city-official.html')
+
+@app.route('/city-official/search')
+def search():
+    return render_template('city-official/search.html')
+
+@app.route('/city-official/poi-report')
+def poi_report():
+    return render_template('city-official/poi-report.html')
 
 # These should only be accessible if you have admin authorization
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html')
+    return render_template('admin/admin.html')
 
 @app.route('/admin/pending-points')
 def pending_points():
-    return render_template('pending-points.html')
+    return render_template('admin/pending-points.html')
 
 @app.route('/admin/pending-accounts')
 def pending_accounts():
-    return render_template('pending-accounts.html')
+    return render_template('admin/pending-accounts.html')
