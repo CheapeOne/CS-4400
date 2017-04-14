@@ -1,19 +1,28 @@
 from app import app
 from flask import Flask, url_for, render_template
+from flask.ext.mysql import MySQL
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/login')
+@app.route('/login/')
 def login():
     return render_template('login.html')
+
+@app.route('/login/validate')
+def login():
+    pass
 
 @app.route('/register')
 def register():
     return render_template('register.html')
 
-# These should only be accessible if you have city scientist authorization   
+@app.route('/register/validate')
+def register():
+    pass
+
+# These should only be accessible if you have city scientist authorization
 
 @app.route('/city-scientist')
 def city_scientist():
