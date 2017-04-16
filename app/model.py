@@ -1,3 +1,4 @@
+import pymysql
 def check_login(username, password):
     connect()
     sql='''SELECT username,password from Users where username=%s and password = %s'''
