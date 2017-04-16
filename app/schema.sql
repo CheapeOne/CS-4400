@@ -6,7 +6,7 @@ CREATE TABLE Data_Type (
 CREATE TABLE City_State (
   City      VARCHAR(50) NOT NULL,
   State     VARCHAR(50) NOT NULL,
-  PRIMARY KEY (City, State) 
+  PRIMARY KEY (City, State)
 );
 
 CREATE TABLE User (
@@ -18,25 +18,25 @@ CREATE TABLE User (
   UNIQUE KEY (Email)
 );
 
-CREATE TABLE POI (
-  Date_Flagged    TIMESTAMP DEFAULT 0,
-  Flagged   TINYINT(1) DEFAULT 0,
+CREATE TABLE POI_Location (
   Location_Name VARCHAR(40) NOT NULL,
-  Zip_Code    CHAR(5),
   City      VARCHAR(50) NOT  NULL,
   State     VARCHAR(50) NOT NULL,
+  Zip_Code    CHAR(5),
+  Flagged   TINYINT(1) DEFAULT 0,
+  Date_Flagged    TIMESTAMP DEFAULT 0,
   PRIMARY KEY (Location_Name),
   FOREIGN KEY (City, State) REFERENCES City_State
-  ON DELETE CASCADE 
+  ON DELETE CASCADE
   ON UPDATE CASCADE
 );
 
 CREATE TABLE Data_Point (
-  Date_Time    TIMESTAMP NOT NULL,
   POI_Location_Name   VARCHAR(40) NOT NULL,
+  Date_Time    TIMESTAMP NOT NULL,
   Data_Value      FLOAT NOT NULL,
-  Accepted    ENUM("pending", "approved", "rejected") NOT NULL,
   Data_Type     VARCHAR(40) NOT NULL,
+  Accepted    ENUM("pending", "approved", "rejected") NOT NULL,
   PRIMARY KEY (Date_Time, POI_Location_Name),
   FOREIGN KEY (POI_Location_Name) REFERENCES POI(Location_Name)
   ON DELETE CASCADE
@@ -51,12 +51,11 @@ CREATE TABLE City_Official(
   Title   VARCHAR(20) NOT NULL,
   City    VARCHAR(50) NOT NULL,
   State     VARCHAR(50) NOT NULL,
-  Approved ENUM("pending","approved","rejected"),
   PRIMARY KEY (Username),
   FOREIGN KEY (City, State) REFERENCES City_State
   ON DELETE CASCADE
   ON UPDATE CASCADE,
   FOREIGN KEY(Username) REFERENCES User
-  ON DELETE CASCADE 
+  ON DELETE CASCADE
   ON UPDATE CASCADE
 );
