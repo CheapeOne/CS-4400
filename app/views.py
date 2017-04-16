@@ -19,7 +19,7 @@ def validate_login():
     username = request.form["username"]
     password = request.form["password"]
 
-    model.check_login(username, password)
+    result = model.login_user(username, password)
 
     return jsonify({"msg": "success"})
 
