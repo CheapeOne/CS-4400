@@ -1,4 +1,5 @@
 from app import app
+from app import model
 from flask import Flask, url_for, render_template, request, jsonify
 
 
@@ -16,8 +17,9 @@ def login():
 def validate_login():
     print("Logging in a user...")
     username = request.form["username"]
+    password = request.form["password"]
 
-    # TODO: Call method to do SQL stuff...
+    model.check_login(username, password)
 
     return jsonify({"msg": "success"})
 
