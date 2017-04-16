@@ -9,35 +9,35 @@
 
         <div class="card">
             <div class="card-block">
-            <form>
+            <form id="add-location-form">
 
                 <div class="form-group">
-                    <label for="nameInput">POI Location Name</label>
-                    <input type="text" class="form-control" id="nameInput" placeholder="Enter the location's name">
+                    <label for="name-input">POI Location Name</label>
+                    <input type="text" name="name" class="form-control" id="name-input" placeholder="Enter the location's name">
                 </div>
 
                 <div class="form-group">
-                    <label for="cityInput">City</label>
-                    <select class="form-control" id="cityInput">
+                    <label for="city-input">City</label>
+                    <select name="city" class="form-control" id="city-input">
                         <option>Atlanta</option>
                         <option>(We'll grab all these from DB)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="stateInput">State</label>
-                    <select class="form-control" id="stateInput">
+                    <label for="state-input">State</label>
+                    <select name="state" class="form-control" id="state-input">
                         <option>Georgia</option>
                         <option>(We'll grab all these from DB)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="zipInput">Zip Code</label>
-                    <input type="text" pattern="[0-9]{5}" class="form-control" id="zipInput" placeholder="Enter the location's zip code">          
+                    <label for="zip-input">Zip Code</label>
+                    <input type="text" pattern="[0-9]{5}" name="zip" class="form-control" id="zip-input" placeholder="Enter the location's zip code">          
                 </div>
 
-                 <button type="submit" class="btn btn-warning">Submit
+                 <button id="add-location-button" onclick="submitLocation()" class="btn btn-warning">Submit
                  </button>
             </form>
             </div>
@@ -46,6 +46,10 @@
 </div>
 
 {%- endblock content %}
+
+{% block js %}
+<script src="{{url_for('static', filename='js/add-location.js')}}"></script>
+{% endblock js %}
 
 
 

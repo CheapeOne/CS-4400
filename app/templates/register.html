@@ -9,36 +9,36 @@
 
         <div class="card">
             <div class="card-block">
-            <form>
+            <form id="registration-form">
                 <div class="form-group">
-                    <label for="usernameInput">Username</label>
-                    <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+                    <label for="username-input">Username</label>
+                    <input type="text" name="username" class="form-control" id="username-input" placeholder="Username">
                 </div>
 
                 <div class="form-group">
-                    <label for="emailInput">Email address</label>
-                    <input type="email" class="form-control" id="emailInput" aria-describedby="emailHelp" placeholder="Enter email">          
+                    <label for="email-input">Email address</label>
+                    <input type="email" name="email" class="form-control" id="email-input" aria-describedby="emailHelp" placeholder="Enter email">          
                 </div>
 
                 <div class="form-group">
-                    <label for="passwordInput">Password</label>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                    <label for="password-input">Password</label>
+                    <input type="password" name="password" class="form-control" id="password-input" placeholder="Password">
                 </div>
 
                 <div class="form-group">
-                    <label for="confirmPasswordInput">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm Password">
+                    <label for="confirm-password-input">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password-input" placeholder="Confirm Password">
                 </div>
 
                 <div class="form-group">
-                    <label for="typeInput">User Type</label>
-                    <select class="form-control" id="typeInput">
+                    <label for="type-input">User Type</label>
+                    <select class="form-control" id="type-input">
                       <option>City Official</option>
                       <option>City Scientist</option>
                     </select>
                 </div>
 
-                 <button type="submit" class="btn btn-warning">Register
+                 <button id="register-button" onclick="submitRegistration()" class="btn btn-warning">Register
                  </button>
             </form>
             </div>
@@ -47,3 +47,7 @@
 </div>
 
 {%- endblock content %}
+
+{% block js %}
+<script src="{{url_for('static', filename='js/register.js')}}"></script>
+{% endblock js %}

@@ -9,14 +9,14 @@
         
         <div class="card">
             <div class="card-block">
-            <form>
+            <form id="login-form">
                 <div class="form-group">
-                    <label for="usernameInput">Username</label>
-                    <input type="text" class="form-control" id="usernameInput" placeholder="Username">
+                    <label for="username-input">Username</label>
+                    <input type="text" name="username" class="form-control" id="username-input" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label for="passwordInput">Password</label>
-                    <input type="password" class="form-control" id="passwordInput" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label class="form-check-label">
@@ -25,7 +25,7 @@
                     </label>
                 </div>
 
-                 <button type="submit" class="btn btn-warning">Login
+                 <button id="login-button" onclick="submitLogin()" class="btn btn-warning">Login
                  </button>
             </form>
             </div>
@@ -34,3 +34,7 @@
 </div>
 
 {%- endblock content %}
+
+{% block js %}
+<script src="{{url_for('static', filename='js/login.js')}}"></script>
+{% endblock js %}
