@@ -35,13 +35,13 @@ def login_user(username, password):
 
 def add_user(email, username, password, type):
     db, cursor = connect()
- if user == '':
+    if user == '':
          return('Error',"Registration Failed: Empty User name")
 
-     if user == '''SELECT username from GTChatUsers where username = user''':
+    if user == '''SELECT username from GTChatUsers where username = user''':
          return('Error',"Registration Failed: Username taken")
          
-     if passwd != confirm:
+    if passwd != confirm:
          return('Error',"Registration Failed: Password does not mach confirmation")
          
     query = "SELECT * FROM User"
