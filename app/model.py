@@ -19,15 +19,15 @@ def login_user(username, password):
     db, cursor = connect()
 
     query = '''SELECT username,password from User where username=%s and password = %s'''
-    cursor = db.cursor{}
+    cursor = db.cursor()
     cursor.execute( query,(self.username,password))
     db.close()
 
     cursor.execute(query)
     if cursor.execute =='':
      
-       messagebox.showerror('Login failed',"Check username and password")
-       return
+       return('Login failed',"Check username and password")
+       
 
 
     disconnect(db, cursor)
@@ -35,17 +35,20 @@ def login_user(username, password):
 
 def add_user(email, username, password, type):
     db, cursor = connect()
+ if user == '':
+         return('Error',"Registration Failed: Empty User name")
 
-    if email == "":
-        messagebox.showerror('Error: Registration Failed: Empty email.')
-    if username == "":
-        messagebox.showerror('Error: Registration Failed: Empty username.')
-    if password == "":
-        messagebox.showerror('Error: Registration Failed: You must enter a password.')
-    if email == "SELECT Email from User where Email = email":
-        messagebox.showerror("Error: Registration Failed: This email is already registered in the database.")
-    if username == "SELECT Username from User where Username = username":
-        messagebox.showerror("Error: Registration Failed: This username is already registered in the database.")
+     if user == '''SELECT username from GTChatUsers where username = user''':
+         return('Error',"Registration Failed: Username taken")
+         
+     if passwd != confirm:
+         return('Error',"Registration Failed: Password does not mach confirmation")
+         
+    query = "SELECT * FROM User"
+
+    cursor.execute(query)
+
+    print("Results...")
 
     for row in cursor:
         print(row)
