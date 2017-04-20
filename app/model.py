@@ -17,37 +17,30 @@ def disconnect(db, cursor):
 
 def login_user(username, password):
     db, cursor = connect()
-    if email == "":
-        messagebox.showerror('Error: Registration Failed: Empty email.')
-    if username == "":
-        messagebox.showerror('Error: Registration Failed: Empty username.')
-    if password == "":
-        messagebox.showerror('Error: Registration Failed: You must enter a password.')
-    if email == "SELECT Email from User where Email = email":
-        messagebox.showerror("Error: Registration Failed: This email is already registered in the database.")
-    if username == "SELECT Username from User where Username = username":
-        messagebox.showerror("Error: Registration Failed: This username is already registered in the database.")
 
-    print("Results...")
+    query = '''SELECT username,password from User where username=%s and password = %s'''
+    cursor = db.cursor{}
+    cursor.execute( query,(self.username,password))
+    db.close()
 
-    for row in cursor:
-        print(row)
+    cursor.execute(query)
+    if cursor.execute =='':
+     
+       messagebox.showerror('Login failed',"Check username and password")
+       return
+
 
     disconnect(db, cursor)
 
 
 def add_user(email, username, password, type):
     db, cursor = connect()
-    if email == "":
-        messagebox.showerror('Error: Registration Failed: Empty email.')
-    if username == "":
-        messagebox.showerror('Error: Registration Failed: Empty username.')
-    if password == "":
-        messagebox.showerror('Error: Registration Failed: You must enter a password.')
-    if email == "SELECT Email from User where Email = email":
-        messagebox.showerror("Error: Registration Failed: This email is already registered in the database.")
-    if username == "SELECT Username from User where Username = username":
-        messagebox.showerror("Error: Registration Failed: This username is already registered in the database.")
+
+    query = "SELECT * FROM User"
+
+    cursor.execute(query)
+
+    print("Results...")
 
     for row in cursor:
         print(row)
