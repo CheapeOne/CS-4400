@@ -17,10 +17,16 @@ def disconnect(db, cursor):
 
 def login_user(username, password):
     db, cursor = connect()
-
-    query = "SELECT * FROM User"
-
-    cursor.execute(query)
+    if email == "":
+        messagebox.showerror('Error: Registration Failed: Empty email.')
+    if username == "":
+        messagebox.showerror('Error: Registration Failed: Empty username.')
+    if password == "":
+        messagebox.showerror('Error: Registration Failed: You must enter a password.')
+    if email == "SELECT Email from User where Email = email":
+        messagebox.showerror("Error: Registration Failed: This email is already registered in the database.")
+    if username == "SELECT Username from User where Username = username":
+        messagebox.showerror("Error: Registration Failed: This username is already registered in the database.")
 
     print("Results...")
 
@@ -32,12 +38,16 @@ def login_user(username, password):
 
 def add_user(email, username, password, type):
     db, cursor = connect()
-
-    query = "SELECT * FROM User"
-
-    cursor.execute(query)
-
-    print("Results...")
+    if email == "":
+        messagebox.showerror('Error: Registration Failed: Empty email.')
+    if username == "":
+        messagebox.showerror('Error: Registration Failed: Empty username.')
+    if password == "":
+        messagebox.showerror('Error: Registration Failed: You must enter a password.')
+    if email == "SELECT Email from User where Email = email":
+        messagebox.showerror("Error: Registration Failed: This email is already registered in the database.")
+    if username == "SELECT Username from User where Username = username":
+        messagebox.showerror("Error: Registration Failed: This username is already registered in the database.")
 
     for row in cursor:
         print(row)
