@@ -123,24 +123,22 @@ def get_pending_points():
 
 
 
-def add_location(name, zip, city, state):
+def add_location(name, city, state, zip):
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES (name, zip, city, state)"
 
     cursor.execute(query)
 
-    print("Results...")
-
-    for row in cursor:
-        print(row)
-
     disconnect(db, cursor)
+
+
+   
 
 def get_locations():
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "SELECT * FROM POI"
 
     cursor.execute(query)
 
