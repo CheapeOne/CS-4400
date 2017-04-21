@@ -33,32 +33,38 @@ def login_user(username, password):
     disconnect(db, cursor)
 
 
-def add_user(email, username, password, confirm, type):
+def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
     if user == '':
          return('Error',"Registration Failed: Empty User name")
 
-    if user == '''SELECT username from GTChatUsers where username = user''':
+    if user == '''SELECT username from Users where username = user''':
          return('Error',"Registration Failed: Username taken")
-         
-    if passwd != confirm:
+
+    if email == '':
+         return('Error',"Registration Failed: Empty Email")
+
+    if emailaddress == '''SELECT username from Users where email = emailaddress''':
+         return('Error',"Registration Failed: Email taken")
+        
+    if password == '':
+         return('Error',"Registration Failed: You must enter a password.")
+
+    if password != confirm:
          return('Error',"Registration Failed: Password does not mach confirmation")
-         
-    query = "SELECT * FROM User"
+
+    query = "INSERT INTO Users (email, username, passsword, Type) VALUES (emailaddress, user, password, Type)"
 
     cursor.execute(query)
 
-    print("Results...")
-
-    for row in cursor:
-        print(row)
-
     disconnect(db, cursor)
+
+
 
 def get_pending_officials():
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "SELECT * FROM City_Official WHERE Approved = pending"
 
     cursor.execute(query)
 
@@ -73,7 +79,7 @@ def get_pending_officials():
 def unpend_user(username):
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "SELECT * from user"
 
     cursor.execute(query)
 
