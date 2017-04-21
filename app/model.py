@@ -76,15 +76,16 @@ def get_pending_officials():
     disconnect(db, cursor)
 
 
-def unpend_user(username):
+def unpend_user(username,status):
     db, cursor = connect()
 
-    query = "SELECT * from user where username = username"
+    query = "SELECT * from User where username = username"
 
     cursor.execute(query,(username))
     if cursor.execute =='':
         return "Please enter username"
-    #sql = "UPDATE 
+    sql = "UPDATE City Officials set status = status"
+    cursor.execute(sql,(status))
     print("Results...")
 
     for row in cursor:
@@ -107,19 +108,19 @@ def add_point(location, timeanddate, Type, Value):
 
 
 
+
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "SELECT * FROM Data_Point WHERE status = 'pending'"
 
     cursor.execute(query)
-
-    print("Results...")
 
     for row in cursor:
         print(row)
 
     disconnect(db, cursor)
+
 
 
 def add_location(name, zip, city, state):
