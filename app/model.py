@@ -33,7 +33,7 @@ def login_user(username, password):
     disconnect(db, cursor)
 
 
-def add_user(email, username, password, type):
+def add_user(email, username, password, confirm, type):
     db, cursor = connect()
     if user == '':
          return('Error',"Registration Failed: Empty User name")
