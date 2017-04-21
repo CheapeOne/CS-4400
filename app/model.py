@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306,
-                           user='root', passwd='cheape42', db='cs4400db')
+                           user='root', passwd='kimo64', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -20,7 +20,7 @@ def login_user(username, password):
 
     query = '''SELECT username,password from User where username=%s and password = %s'''
     cursor = db.cursor()
-    cursor.execute( query,(self.username,password))
+    cursor.execute( query,(username,password))
     db.close()
 
     cursor.execute(query)
@@ -54,7 +54,7 @@ def add_user(emailaddress, user, password, confirm, Type):
          return('Error',"Registration Failed: Password does not mach confirmation")
 
     query = "INSERT INTO Users (email, username, passsword, Type) VALUES (emailaddress, user, password, Type)"
-
+    return "done"
     cursor.execute(query)
 
     disconnect(db, cursor)
@@ -79,10 +79,12 @@ def get_pending_officials():
 def unpend_user(username):
     db, cursor = connect()
 
-    query = "SELECT * from user"
+    query = "SELECT * from user where username = username"
 
-    cursor.execute(query)
-
+    cursor.execute(query,(username))
+    if cursor.execute =='':
+        return "Please enter username"
+    #sql = "UPDATE 
     print("Results...")
 
     for row in cursor:
@@ -91,19 +93,18 @@ def unpend_user(username):
     disconnect(db, cursor)
 
 
-def add_point(type, value, location, date):
+def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    if type(Value) != int:
+        return("Error: Please enter an integer for Data Value.")
+
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, DateTime) VALUES (Type, Value, location, timeanddate)"
 
     cursor.execute(query)
 
-    print("Results...")
-
-    for row in cursor:
-        print(row)
-
     disconnect(db, cursor)
+
 
 
 def get_pending_points():
