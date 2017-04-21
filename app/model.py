@@ -150,13 +150,16 @@ def get_locations():
     disconnect(db, cursor)
 
 
-def flag_location(name):
+def flag_location(name,status):
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
+    query = "SELECT * FROM POI WHERE name = Location_Name"
 
-    cursor.execute(query)
-
+    cursor.execute(query,(name))
+    if cursor.execute == '':
+        return 'doesnt exist'
+    sql = "UPDATE POI set status = status"
+    cursor.execute(sql,(status))
     print("Results...")
 
     for row in cursor:
@@ -165,12 +168,13 @@ def flag_location(name):
     disconnect(db, cursor)
 
 
-def make_report():
+def make_report(Type,valueL,valueU,time_dateL,time_dateU):
     db, cursor = connect()
 
-    query = "SELECT * FROM User"
-
-    cursor.execute(query)
+    query = "SELECT * FROM Data_Point where Type = Type UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN valueL AND valueU UNION SELECT * from Data_Point WHERE time_date BETWEEN time_dateL AND time_dateU"
+    
+    
+    cursor.execute(query,(Type,valueL,valueU,time_dateL,time_dateU))
 
     print("Results...")
 
