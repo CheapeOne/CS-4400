@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306,
-                         user='root', passwd='cheape42', db='cs4400db')
+                         user='root', passwd='0ktob3r_902107*', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -23,9 +23,7 @@ def login_user(username, password):
     cursor.execute(query, (username, password))
     db.close()
 
-    
     if cursor.execute == "":
-
         return("Login failed", "Check username and password")
 
     disconnect(db, cursor)
@@ -49,7 +47,7 @@ def add_user(emailaddress, user, password, confirm, Type):
         return(False, "Registration Failed: You must enter a password.")
 
     if password != confirm:
-        return(False, "Registration Failed: Password does not mach confirmation")
+        return(False, "Registration Failed: Password does not match confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
 

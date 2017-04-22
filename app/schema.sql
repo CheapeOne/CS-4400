@@ -26,7 +26,7 @@ CREATE TABLE POI_Location (
   Flagged   TINYINT(1) DEFAULT 0,
   Date_Flagged    TIMESTAMP DEFAULT 0,
   PRIMARY KEY (Location_Name),
-  FOREIGN KEY (City, State) REFERENCES City_State
+  FOREIGN KEY (City, State) REFERENCES City_State(City, State)
   ON DELETE CASCADE
   ON UPDATE CASCADE
 );
@@ -38,7 +38,7 @@ CREATE TABLE Data_Point (
   Data_Type     VARCHAR(40) NOT NULL,
   Accepted    ENUM("pending", "approved", "rejected") NOT NULL,
   PRIMARY KEY (Date_Time, POI_Location_Name),
-  FOREIGN KEY (POI_Location_Name) REFERENCES POI(Location_Name)
+  FOREIGN KEY (POI_Location_Name) REFERENCES POI_Location(Location_Name)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
   FOREIGN KEY (Data_Type) REFERENCES Data_Type(Type)
@@ -52,10 +52,10 @@ CREATE TABLE City_Official(
   City    VARCHAR(50) NOT NULL,
   State     VARCHAR(50) NOT NULL,
   PRIMARY KEY (Username),
-  FOREIGN KEY (City, State) REFERENCES City_State
+  FOREIGN KEY (City, State) REFERENCES City_State(City, State)
   ON DELETE CASCADE
   ON UPDATE CASCADE,
-  FOREIGN KEY(Username) REFERENCES User
+  FOREIGN KEY(Username) REFERENCES User(Username)
   ON DELETE CASCADE
   ON UPDATE CASCADE
 );
