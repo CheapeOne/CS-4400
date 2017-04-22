@@ -24,7 +24,7 @@ def login_user(username, password):
     db.close()
 
     cursor.execute(query)
-    if cursor.execute == ":
+    if cursor.execute == "":
 
        return("Login failed","Check username and password")
 

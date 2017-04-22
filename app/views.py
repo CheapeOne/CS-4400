@@ -1,5 +1,6 @@
 from app import app
 from app import model
+from app import populate
 from flask import Flask, url_for, render_template, request, jsonify
 
 
@@ -60,7 +61,7 @@ def validate_point():
 
     result = model.add_point(request.form["poi"], request.form["time"], request.form["type"], request.form["value"])
 
-    # TODO: redirect based on the result. 
+    # TODO: redirect based on the result.
     # Just refresh the add point page with a message based on 'success' or 'error'
 
     return jsonify({"msg": "success"})

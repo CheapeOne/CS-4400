@@ -3,11 +3,11 @@ import random as rand
 
 db = my.connect(host="127.0.0.1",
 user="root",
-passwd="root",
-db="slsapp"
+passwd="0ktob3r_902107*",
+db="cs4400db"
 )
 
-cursor = db.cursor()
+cur = db.cursor()
 
 # CityStates
 
