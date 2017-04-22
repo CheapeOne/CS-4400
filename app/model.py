@@ -41,7 +41,7 @@ def add_user(emailaddress, user, password, confirm, Type):
     if user == '''SELECT username from Users where username = user''':
          return('Error',"Registration Failed: Username taken")
 
-    if email == '':
+    if emailaddress == '':
          return('Error',"Registration Failed: Empty Email")
 
     if emailaddress == '''SELECT username from Users where email = emailaddress''':
@@ -53,11 +53,14 @@ def add_user(emailaddress, user, password, confirm, Type):
     if password != confirm:
          return('Error',"Registration Failed: Password does not mach confirmation")
 
-    query = "INSERT INTO Users (email, username, passsword, Type) VALUES (emailaddress, user, password, Type)"
-    return "done"
+    query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+    
     cursor.execute(query)
+    db.commit()
 
     disconnect(db, cursor)
+
+    return "done"
 
 
 

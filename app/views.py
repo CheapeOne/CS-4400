@@ -16,10 +16,11 @@ def login():
 @app.route('/login/validate', methods=['POST'])
 def validate_login():
     print("Logging in a user...")
-    username = request.form["username"]
-    password = request.form["password"]
 
-    result = model.login_user(username, password)
+    result = model.login_user(request.form["username"], request.form["password"])
+
+    # TODO: redirect based on the result. If success, log them in.
+    # If failure, keep them on the login page with an error message.
 
     return jsonify({"msg": "success"})
 
@@ -32,9 +33,11 @@ def register():
 @app.route('/register/validate', methods=['POST'])
 def validate_registration():
     print("Registering a user...")
-    username = request.form["username"]
 
-    # TODO: Call method to do SQL stuff...
+    result = model.add_user(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"])
+
+    # TODO: redirect based on the result. If success, log them in?
+    # If failure, keep them on the registration page with an error message.
 
     return jsonify({"msg": "success"})
 
@@ -53,9 +56,12 @@ def add_point():
 
 @app.route('/city-scientist/add-point/validate', methods=['POST'])
 def validate_point():
-    print("Adding data point")
+    print("Adding data point...")
 
-    # TODO: Call method to do SQL stuff...
+    result = model.add_point(request.form["poi"], request.form["time"], request.form["type"], request.form["value"])
+
+    # TODO: redirect based on the result. 
+    # Just refresh the add point page with a message based on 'success' or 'error'
 
     return jsonify({"msg": "success"})
 
