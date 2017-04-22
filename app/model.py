@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306,
-                         user='root', passwd='Elite12$', db='cs4400db')
+                         user='root', passwd='', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -23,9 +23,7 @@ def login_user(username, password):
     cursor.execute(query, (username, password))
     db.close()
 
-    
     if cursor.execute == "":
-
         return("Login failed", "Check username and password")
 
     disconnect(db, cursor)

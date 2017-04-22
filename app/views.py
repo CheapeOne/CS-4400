@@ -41,9 +41,9 @@ def validate_registration():
     # TODO: redirect based on the result. If success, log them in?
     # If failure, keep them on the registration page with an error message.
 
-    return jsonify({"msg": result[1]})
+    return jsonify({"success": result[0],"msg": result[1]})
 
-    
+
 
 # These should only be accessible if you have city scientist authorization
 
