@@ -38,7 +38,7 @@ def add_user(emailaddress, user, password, confirm, Type):
     if user == "":
          return("Error", "Registration Failed: Empty User name")
 
-    if user == "SELECT username from Users where username = user":
+    if user == "SELECT username from Users where username = {user}":
          return("Error", "Registration Failed: Username taken")
 
     if email == "":
@@ -66,7 +66,7 @@ def add_user(emailaddress, user, password, confirm, Type):
 def get_pending_officials():
     db, cursor = connect()
 
-    query = "SELECT * FROM City_Official WHERE Approved = pending"
+    query = "SELECT * FROM City_Official WHERE Approved = 'pending'"
 
     cursor.execute(query)
 
