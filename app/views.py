@@ -1,6 +1,5 @@
 from app import app
 from app import model
-from app import populate
 from flask import Flask, url_for, render_template, request, jsonify
 
 

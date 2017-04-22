@@ -35,19 +35,19 @@ def login_user(username, password):
 
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
-    if user == ":
+    if user == "":
          return("Error","Registration Failed: Empty User name")
 
     if user == "SELECT username from Users where username = user":
          return("Error","Registration Failed: Username taken")
 
-    if emailaddress == ":
+    if emailaddress == "":
          return("Error","Registration Failed: Empty Email")
 
     if emailaddress == "SELECT username from Users where email = emailaddress":
          return("Error","Registration Failed: Email taken")
 
-    if password == ":
+    if password == "":
          return("Error","Registration Failed: You must enter a password.")
 
     if password != confirm:
@@ -159,7 +159,7 @@ def flag_location(name,status):
     query = "SELECT * FROM POI WHERE name = Location_Name"
 
     cursor.execute(query,(name))
-    if cursor.execute == ":
+    if cursor.execute == "":
         return "doesnt exist"
     sql = "UPDATE POI set status = status"
     cursor.execute(sql,(status))
