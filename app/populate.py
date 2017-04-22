@@ -3,7 +3,7 @@ import random as rand
 
 db = my.connect(host="127.0.0.1",
 user="root",
-passwd="0ktob3r_902107*",
+passwd="",
 db="cs4400db"
 )
 
