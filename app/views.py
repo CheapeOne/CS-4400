@@ -34,6 +34,8 @@ def register():
 def validate_registration():
     print("Registering a user...")
 
+
+
     result = model.add_user(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"])
 
     # TODO: redirect based on the result. If success, log them in?
@@ -65,7 +67,9 @@ def validate_point():
     # TODO: redirect based on the result.
     # Just refresh the add point page with a message based on 'success' or 'error'
 
-    return jsonify({"msg": "success"})
+    print(result)
+
+    return jsonify({"msg": result[1]})
 
 
 @app.route('/city-scientist/add-location')
@@ -79,7 +83,7 @@ def validate_location():
 
     # TODO: Call method to do SQL stuff...
 
-    return jsonify({"msg": "success"})
+    return jsonify({"msg": result[1]})
 
 # These should only be accessible if you have city official authorization
 

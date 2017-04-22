@@ -31,25 +31,26 @@ def login_user(username, password):
     disconnect(db, cursor)
 
 
-def add_user(emailaddress, user, password, confirm, Type):
+def add_user(user, emailaddress, password, confirm, Type):
     db, cursor = connect()
-    if user == "":
-        return(False, "Registration Failed: Empty User name")
 
-    if user == "SELECT username from Users where username = user":
-        return(False, "Registration Failed: Username taken")
+    if user is "" or user is None:
+        return (False, "Registration Failed: Empty User name")
+
+    if user is "SELECT username from User where username = user":
+        return (False, "Registration Failed: Username taken")
 
     if emailaddress == "":
-        return(False, "Registration Failed: Empty Email")
+        return (False, "Registration Failed: Empty Email")
 
     if emailaddress == "SELECT username from Users where email = emailaddress":
-        return(False, "Registration Failed: Email taken")
+        return (False, "Registration Failed: Email taken")
 
     if password == "":
-        return(False, "Registration Failed: You must enter a password.")
+        return (False, "Registration Failed: You must enter a password.")
 
     if password != confirm:
-        return(False, "Registration Failed: Password does not mach confirmation")
+        return (False, "Registration Failed: Password does not mach confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
 
@@ -95,6 +96,9 @@ def unpend_user(username, status):
 
 
 def add_point(location, timeanddate, Type, Value):
+
+    return (True, "Point added!")
+
     db, cursor = connect()
 
     if type(Value) != int:
@@ -105,6 +109,8 @@ def add_point(location, timeanddate, Type, Value):
     cursor.execute(query)
 
     disconnect(db, cursor)
+
+
 
 
 def get_pending_points():
@@ -121,6 +127,9 @@ def get_pending_points():
 
 
 def add_location(name, city, state, zip):
+
+    return (True, "Location added!")
+
     db, cursor = connect()
 
     query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES (name, zip, city, state)"
