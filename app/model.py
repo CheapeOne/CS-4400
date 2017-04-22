@@ -18,16 +18,16 @@ def disconnect(db, cursor):
 def login_user(username, password):
     db, cursor = connect()
 
-    query = '''SELECT username,password from User where username=%s and password = %s'''
+    query = "SELECT username,password from User where username=%s and password = %s"
     cursor = db.cursor()
-    cursor.execute( query,(username,password))
+    cursor.execute(query,(username,password))
     db.close()
 
     cursor.execute(query)
-    if cursor.execute =='':
-     
-       return('Login failed',"Check username and password")
-       
+    if cursor.execute == ":
+
+       return("Login failed","Check username and password")
+
 
 
     disconnect(db, cursor)
@@ -35,26 +35,26 @@ def login_user(username, password):
 
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
-    if user == '':
-         return('Error',"Registration Failed: Empty User name")
+    if user == ":
+         return("Error","Registration Failed: Empty User name")
 
-    if user == '''SELECT username from Users where username = user''':
-         return('Error',"Registration Failed: Username taken")
+    if user == "SELECT username from Users where username = user":
+         return("Error","Registration Failed: Username taken")
 
-    if emailaddress == '':
-         return('Error',"Registration Failed: Empty Email")
+    if emailaddress == ":
+         return("Error","Registration Failed: Empty Email")
 
-    if emailaddress == '''SELECT username from Users where email = emailaddress''':
-         return('Error',"Registration Failed: Email taken")
-        
-    if password == '':
-         return('Error',"Registration Failed: You must enter a password.")
+    if emailaddress == "SELECT username from Users where email = emailaddress":
+         return("Error","Registration Failed: Email taken")
+
+    if password == ":
+         return("Error","Registration Failed: You must enter a password.")
 
     if password != confirm:
-         return('Error',"Registration Failed: Password does not mach confirmation")
+         return("Error","Registration Failed: Password does not mach confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
-    
+
     cursor.execute(query)
     db.commit()
 
@@ -85,7 +85,7 @@ def unpend_user(username,status):
     query = "SELECT * from User where username = username"
 
     cursor.execute(query,(username))
-    if cursor.execute =='':
+    if cursor.execute == "":
         return "Please enter username"
     sql = "UPDATE City Officials set status = status"
     cursor.execute(sql,(status))
@@ -136,7 +136,7 @@ def add_location(name, city, state, zip):
     disconnect(db, cursor)
 
 
-   
+
 
 def get_locations():
     db, cursor = connect()
@@ -159,8 +159,8 @@ def flag_location(name,status):
     query = "SELECT * FROM POI WHERE name = Location_Name"
 
     cursor.execute(query,(name))
-    if cursor.execute == '':
-        return 'doesnt exist'
+    if cursor.execute == ":
+        return "doesnt exist"
     sql = "UPDATE POI set status = status"
     cursor.execute(sql,(status))
     print("Results...")
@@ -175,8 +175,8 @@ def make_report(Type,valueL,valueU,time_dateL,time_dateU):
     db, cursor = connect()
 
     query = "SELECT * FROM Data_Point where Type = Type UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN valueL AND valueU UNION SELECT * from Data_Point WHERE time_date BETWEEN time_dateL AND time_dateU"
-    
-    
+
+
     cursor.execute(query,(Type,valueL,valueU,time_dateL,time_dateU))
 
     print("Results...")
@@ -185,6 +185,3 @@ def make_report(Type,valueL,valueU,time_dateL,time_dateU):
         print(row)
 
     disconnect(db, cursor)
-
-
-
