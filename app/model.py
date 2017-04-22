@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306,
-                         user='root', passwd='cheape42', db='cs4400db')
+                         user='root', passwd='Elite12$', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -31,25 +31,31 @@ def login_user(username, password):
     disconnect(db, cursor)
 
 
-def add_user(emailaddress, user, password, confirm, Type):
+def add_user(user,emailaddress, password, confirm, Type):
     db, cursor = connect()
     if user == "":
-        return(False, "Registration Failed: Empty User name")
+        return (False, "Registration Failed: Empty User name")
 
-    if user == "SELECT username from Users where username = user":
-        return(False, "Registration Failed: Username taken")
+    cursor.execute("SELECT Username from User")
+    userarray = cursor.fetchall()
+    userarray = [element for tupl in userarray for element in tupl] 
+    if user in userarray:
+        return (False, "Registration Failed: Username taken")
 
     if emailaddress == "":
         return(False, "Registration Failed: Empty Email")
 
-    if emailaddress == "SELECT username from Users where email = emailaddress":
+    cursor.execute("SELECT Email from User")
+    emailarray = cursor.fetchall()
+    emailarray = [element for tupl in emailarray for element in tupl]
+    if emailaddress in emailarray :
         return(False, "Registration Failed: Email taken")
 
     if password == "":
         return(False, "Registration Failed: You must enter a password.")
 
     if password != confirm:
-        return(False, "Registration Failed: Password does not mach confirmation")
+        return(False, "Registration Failed: Password does not match confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
 
