@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306,
-                           user='root', passwd='', db='cs4400db')
+                         user='root', passwd='cheape42', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -20,15 +20,13 @@ def login_user(username, password):
 
     query = "SELECT username,password from User where username=%s and password = %s"
     cursor = db.cursor()
-    cursor.execute(query,(username,password))
+    cursor.execute(query, (username, password))
     db.close()
 
     cursor.execute(query)
     if cursor.execute == "":
 
-       return("Login failed","Check username and password")
-
-
+        return("Login failed", "Check username and password")
 
     disconnect(db, cursor)
 
@@ -36,22 +34,22 @@ def login_user(username, password):
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
     if user == "":
-         return("Error","Registration Failed: Empty User name")
+        return(False, "Registration Failed: Empty User name")
 
     if user == "SELECT username from Users where username = user":
-         return("Error","Registration Failed: Username taken")
+        return(False, "Registration Failed: Username taken")
 
     if emailaddress == "":
-         return("Error","Registration Failed: Empty Email")
+        return(False, "Registration Failed: Empty Email")
 
     if emailaddress == "SELECT username from Users where email = emailaddress":
-         return("Error","Registration Failed: Email taken")
+        return(False, "Registration Failed: Email taken")
 
     if password == "":
-         return("Error","Registration Failed: You must enter a password.")
+        return(False, "Registration Failed: You must enter a password.")
 
     if password != confirm:
-         return("Error","Registration Failed: Password does not mach confirmation")
+        return(False, "Registration Failed: Password does not mach confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
 
@@ -60,8 +58,7 @@ def add_user(emailaddress, user, password, confirm, Type):
 
     disconnect(db, cursor)
 
-    return "done"
-
+    return (True, "Registration Successful!")
 
 
 def get_pending_officials():
@@ -79,16 +76,16 @@ def get_pending_officials():
     disconnect(db, cursor)
 
 
-def unpend_user(username,status):
+def unpend_user(username, status):
     db, cursor = connect()
 
     query = "SELECT * from User where username = username"
 
-    cursor.execute(query,(username))
+    cursor.execute(query, (username))
     if cursor.execute == "":
         return "Please enter username"
     sql = "UPDATE City Officials set status = status"
-    cursor.execute(sql,(status))
+    cursor.execute(sql, (status))
     print("Results...")
 
     for row in cursor:
@@ -110,8 +107,6 @@ def add_point(location, timeanddate, Type, Value):
     disconnect(db, cursor)
 
 
-
-
 def get_pending_points():
     db, cursor = connect()
 
@@ -125,7 +120,6 @@ def get_pending_points():
     disconnect(db, cursor)
 
 
-
 def add_location(name, city, state, zip):
     db, cursor = connect()
 
@@ -134,8 +128,6 @@ def add_location(name, city, state, zip):
     cursor.execute(query)
 
     disconnect(db, cursor)
-
-
 
 
 def get_locations():
@@ -153,16 +145,16 @@ def get_locations():
     disconnect(db, cursor)
 
 
-def flag_location(name,status):
+def flag_location(name, status):
     db, cursor = connect()
 
     query = "SELECT * FROM POI WHERE name = Location_Name"
 
-    cursor.execute(query,(name))
+    cursor.execute(query, (name))
     if cursor.execute == "":
         return "doesnt exist"
     sql = "UPDATE POI set status = status"
-    cursor.execute(sql,(status))
+    cursor.execute(sql, (status))
     print("Results...")
 
     for row in cursor:
@@ -171,13 +163,12 @@ def flag_location(name,status):
     disconnect(db, cursor)
 
 
-def make_report(Type,valueL,valueU,time_dateL,time_dateU):
+def make_report(Type, valueL, valueU, time_dateL, time_dateU):
     db, cursor = connect()
 
     query = "SELECT * FROM Data_Point where Type = Type UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN valueL AND valueU UNION SELECT * from Data_Point WHERE time_date BETWEEN time_dateL AND time_dateU"
 
-
-    cursor.execute(query,(Type,valueL,valueU,time_dateL,time_dateU))
+    cursor.execute(query, (Type, valueL, valueU, time_dateL, time_dateU))
 
     print("Results...")
 
