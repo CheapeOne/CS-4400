@@ -91,7 +91,7 @@ def search():
 
 @app.route('/city-official/poi-search/get-results', methods=['GET'])
 def get_search_results():
-    result = model.get_locations()
+    result = model.get_locations(request.form["poi"], request.form["city"], request.form["state"], request.form["zipcode"])
 
     return jsonify({"msg": result[1]})
 
@@ -120,6 +120,26 @@ def get_pending_points():
     return jsonify({"points": result[1]})
 
 
+@app.route('/admin/pending-points/accept')
+def accept_pending_point():
+    poi = request.args.get('poi')
+    time = request.args.get('time')
+
+    #result = model.set_official_status(username, 'approved')
+
+    return render_template('admin/pending-points.html')
+
+
+@app.route('/admin/pending-points/reject')
+def reject_pending_point():
+    poi = request.args.get('poi')
+    time = request.args.get('time')
+
+    #result = model.set_official_status(username, 'rejected')
+
+    return render_template('admin/pending-points.html')
+
+
 @app.route('/admin/pending-accounts')
 def pending_accounts():
     return render_template('admin/pending-accounts.html')
@@ -142,9 +162,30 @@ def accept_pending_account():
 
 
 @app.route('/admin/pending-accounts/reject')
-def reject_pending_accounts():
+def reject_pending_account():
     username = request.args.get('user')
 
     result = model.set_official_status(username, 'rejected')
 
     return render_template('admin/pending-accounts.html')
+
+@app.route('/city-state/states')
+def get_states():
+
+    result = model.get_states()
+
+    return jsonify({"states": result[1]})
+
+@app.route('/city-state/cities')
+def get_cities():
+
+    result = model.get_cities()
+
+    return jsonify({"cities": result[1]})
+
+@app.route('/poi/locations')
+def get_all_locations():
+
+    result = model.get_location_names()
+
+    return jsonify({"locations": result[1]})
