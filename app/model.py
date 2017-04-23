@@ -122,18 +122,21 @@ def add_point(location, timeanddate, Type, Value):
 
     disconnect(db, cursor)
 
+    return (True, "Point added!")
+
 
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point WHERE Approved = 'pending'"
+    query = "SELECT * FROM Data_Point WHERE Accepted = 'pending'"
 
     cursor.execute(query)
 
-    for row in cursor:
-        print(row)
+    data = cursor.fetchall()
 
     disconnect(db, cursor)
+
+    return (True, data)
 
 
 def add_location(poilocation, city, state, zip):
@@ -158,7 +161,7 @@ def add_location(poilocation, city, state, zip):
 
 
 
-def get_locations():
+def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
     return (True, "WOAH hey this is not actually working how about that")
 
@@ -219,4 +222,38 @@ def poi_detail(Type, ValueL, ValueU, tdL, tdU):
 
     disconnect(db, cursor)
 
+    return (True, data)
+
+def get_states():
+    db, cursor = connect()
+    query = "SELECT DISTINCT State FROM City_State"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
+
+def get_cities():
+    db, cursor = connect()
+    query = "SELECT DISTINCT City FROM City_State"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
+def get_data_types():
+    db, cursor = connect()
+    query = "SELECT DISTINCT Type FROM Data_Type"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
+
+def get_location_names():
+    db, cursor = connect()
+    query = "SELECT DISTINCT Location_Name FROM POI"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
     return (True, data)
