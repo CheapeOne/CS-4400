@@ -7,7 +7,10 @@ $( document ).ready(function() {
 
 function searchPOI(){
     console.log("Searching POIs...");
-    $.get( '/city-official/poi-search/get-results', $('#search-form').serialize()).done(function (data){
+
+    $.get('/city-official/poi-search/get-results', $("#search-form :input[value!='']").filter(function(index, element) {
+        return $(element).val() != "";
+    }).serialize()).done(function (data){
         data.results.forEach(function(poi){
             addSearchResult(poi);
         });
