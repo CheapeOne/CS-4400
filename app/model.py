@@ -1,12 +1,11 @@
 import pymysql
-
+from flask import Flask, url_for, render_template, request, jsonify, redirect, flash
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
                          passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
-
     return db, cursor
 
 
@@ -17,22 +16,27 @@ def disconnect(db, cursor):
 
 def check_user(username, password):
     db, cursor = connect()
-    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals(
-    )
+
+    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals()
     cursor.execute(query)
     row = cursor.fetchone()
-    if username == "":
-        return(False, "Login Failed: Empty username field")
-
-    if password == "":
-        return(False, "Login Failed: Empty password field")
-    sql = "SELECT username from User where  Username = '%(username)s'" % locals(
-    )
-    if cursor.execute(sql) == '':
-        return(False, "Username or Password are wrong")
 
     disconnect(db, cursor)
-    return (True, "yay")
+
+    return row;
+
+
+def get_user_type(username):
+    db, cursor = connect()
+
+    query = "SELECT User_Type FROM User WHERE Username = '%(username)s'" % locals()
+    cursor.execute(query)
+    row = cursor.fetchone()
+
+    disconnect(db, cursor)
+
+    return row;
+
 
 
 def add_user(emailaddress, user, password, confirm, Type):
@@ -107,11 +111,6 @@ def set_point_status(poi, time, status):
 
 def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
-    locationtimeexists = "SELECT count(POI_Location_Name) from data_point where POI_Location_Name = '%(location)s' and Date_Time = '%(timeanddate)s'" % locals()
-    cursor.execute(locationtimeexists)
-    locationtimecount = cursor.fetchall()
-    if locationtimecount[0]['count(POI_Location_Name)'] != 0:
-        return(False, "This location already exists.")
     if Value == '':
         return(False, 'Please enter value')
     if timeanddate == '':
@@ -121,10 +120,10 @@ def add_point(location, timeanddate, Type, Value):
     except:
         return(False, "Please enter an integer for Data Value.")
 
-    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time,Accepted) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s','Pending')" % locals()
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
 
     cursor.execute(query)
-    db.commit()
+
     disconnect(db, cursor)
 
     return (True, "Point added!")
@@ -165,19 +164,15 @@ def add_location(poilocation, city, state, zip):
         return (True, "Location Added!")
 
 
-def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
-
-    if poi == '0':
-        poi = 'No'
+def search_locations(poi=None, city=None, state=None, zipcode=None, flagged=None, flagged_after=None, flagged_before=None):
+    if poi == 'No':
+        poi = '0'
     else:
-        poi == 'Yes'
-
-    return (True, "WOAH hey this is not actually working how about that")
-
+        poi == '1'
     db, cursor = connect()
 
-    query = "SELECT * FROM POI where Location_Name='%(poi)s' AND City = '%(city)s' AND State = '%(state)s' AND,Zip_Code =  '%(zipcode)s' AND Flagged = '%(flagged)s'"%locals()
+    query =  query = "(SELECT * FROM POI where Location_Name='%(poi)s') intersect (SELECT * FROM POI where City = '%(city)s')intersect(SELECT * FROM POI whereState = '%(state)s') intersect  (SELECT * FROM POI whereZip_Code =  '%(zipcode)s') (SELECT * FROM POI where Flagged = '%(flagged)s') intersect (SELECT * FROM POI where Date_Flagged < '%(flagged_before)s')  (SELECT * FROM POI where Date_Flagged > '%(flagged_after)s')"%locals()
 
     cursor.execute(query)
 
@@ -193,7 +188,6 @@ def flag_location(name, status):
     db, cursor = connect()
 
     query = "SELECT * FROM POI WHERE Location_Name='%(name)s'" % locals()
-
     cursor.execute(query)
     if cursor.execute == "":
         return (False, "doesnt exist")
@@ -207,8 +201,7 @@ def flag_location(name, status):
     disconnect(db, cursor)
 
 
-def make_report():
-    aList = []
+def make_report(Type, valueL, valueU, time_dateL, time_dateU):
     db, cursor = connect()
 
     query = "SELECT * from (select POI_Location_Name, City, State, min(Data_Value) as min_value_mold, AVG(Data_Value) as avg_value_mold, MAX(Data_Value) as max_value_mold, COUNT(Data_Value) as count_mold, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as A natural join (select POI_Location_Name, City, State, min(Data_Value) as min_value_airquality, AVG(Data_Value) as avg_value_airquality, MAX(Data_Value) as max_value_airquality, COUNT(Data_Value) as count_airquality, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as B"

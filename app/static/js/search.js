@@ -8,22 +8,23 @@ $( document ).ready(function() {
 function searchPOI(){
     console.log("Searching POIs...");
     $.get( '/city-official/poi-search/get-results', $('#search-form').serialize()).done(function (data){
-        console.log(data);
+        data.results.forEach(function(poi){
+            addSearchResult(poi);
+        });
     }).fail(function(res){
         console.log(res.responseText);
     });   
 }
 
-function addPendingAccount(account) {
-    $("#pending-accounts").append(`
+function addSearchResult(poi) {
+    $("#search-results").append(`
         <tr>
-            <th>` + account.Username + `</th>
-            <th>` + account.Email + `</th>
-            <th>` + account.City + `</th>
-            <th>` + account.State + `</th>
-            <th>` + account.Title + `</th>
-            <th><a href="/admin/pending-accounts/accept?user=` + account.Username + `" class="card-link btn btn-success">Accept</a></th>
-            <th><a href="/admin/pending-accounts/reject?user=` + account.Username + `" class="card-link btn btn-danger">Reject</a></th>
+            <th>`+ row.Location_Name +`</th>
+            <th>`+ row.City +`</th>
+            <th>`+ row.State +`</th>
+            <th>`+ row.Zip_Code +`</th>
+            <th>`+ row.Flagged +`</th>
+            <th>`+ row.Date_Flagged +`</th>
         </tr>
     `);
 }

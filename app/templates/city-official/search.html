@@ -5,7 +5,7 @@
 <div class="row justify-content-md-center">
 
     <div class="col-md-8">
-        <h1 class="black">Search Page WIP</h1>
+        <h1 class="black">POI Search</h1>
         <hr>
         <div class="card home-card">
           <div class="card-block">
@@ -15,6 +15,7 @@
               <div class="form-group">
                 <label for="poi-input">POI Location Name</label>
                 <select class="form-control" name="poi" id="poi-input">
+                  <option>Not Selected</option>
                   <!-- POIs added here from db -->
                 </select>
               </div>
@@ -22,6 +23,7 @@
               <div class="form-group">
                 <label for="city-input">City</label>
                 <select class="form-control" name="city" id="city-input">
+                  <option>Not Selected</option>
                   <!-- Cities added here from db -->
                 </select>
               </div>
@@ -29,6 +31,7 @@
               <div class="form-group">
                 <label for="state-input">State</label>
                 <select class="form-control" name="state" id="state-input">
+                  <option>Not Selected</option>
                   <!-- States added here from db -->
                 </select>
               </div>
@@ -38,10 +41,13 @@
                 <input type="text" pattern="[0-9]{5}" name="zipcode" class="form-control" id="zip-input" placeholder="Enter the location's zip code">          
               </div>
             
-              <select id="event_allDay" name="event_allDay">
-                <option value="0" selected>No</option>
-                <option value="1">Yes</option>
-              </select>
+              <div class="form-group">
+                <label for="flagged">Flagged?</label>
+                <select id="flagged" name="flagged">
+                  <option value="0" selected>No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
 
               <div class="form-group">
                 <label for="time-input">Date Flagged After</label>
@@ -57,7 +63,29 @@
             </form>  
 
           </div>
-        </div>    
+        </div>  
+
+        <div class="card">
+          <div class="card-block">
+            <h4 class="card-title"></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Location Name</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip Code</th>
+                        <th>Flagged ?</th>
+                        <th>Date Flagged</th>
+                    </tr>
+                </thead>
+                <tbody id="search-results">
+                    <!-- We for loop through this part after getting DB response -->
+                </tbody>
+            </table>
+          </div>
+        </div> 
+
     </div>
 </div>
 

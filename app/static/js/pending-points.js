@@ -1,7 +1,6 @@
 console.log("Getting pending points...");
 
 $.get( '/admin/pending-points/get').done(function (data){
-    console.log(data);
     data.points.forEach(function(point){
         addPendingPoint(point);
     });
@@ -9,7 +8,6 @@ $.get( '/admin/pending-points/get').done(function (data){
 }).fail(function(res){
     console.log(res.responseText);
 });
-
 
 
 function addPendingPoint(point) {
