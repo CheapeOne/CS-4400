@@ -165,13 +165,15 @@ def add_location(poilocation, city, state, zip):
         return (True, "Location Added!")
 
 
+
 def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
 
-    if poi == '0':
-        poi = 'No'
+    if poi == 'No':
+        poi = '0'
     else:
-        poi == 'Yes'
+        poi == '1'
+    
 
     return (True, "WOAH hey this is not actually working how about that")
 
@@ -180,6 +182,7 @@ def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, fla
     query = "SELECT * FROM POI where Location_Name='%(poi)s' AND City = '%(city)s' AND State = '%(state)s' AND,Zip_Code =  '%(zipcode)s' AND Flagged = '%(flagged)s'"%locals()
 
     cursor.execute(query)
+    return (True, 'yay')
 
     print("Results...")
 
