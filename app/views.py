@@ -99,7 +99,6 @@ def search():
 
 @app.route('/city-official/poi-search/get-results', methods=['GET'])
 def get_search_results():
-    print("hey")
     result = model.get_locations()
 
     return jsonify({"msg": result[1]})
@@ -121,7 +120,19 @@ def admin():
 def pending_points():
     return render_template('admin/pending-points.html')
 
+@app.route('/admin/pending-points/get')
+def get_pending_points():
+    result = model.get_pending_points()
+
+    return jsonify({"points": result[1]})
+
 
 @app.route('/admin/pending-accounts')
 def pending_accounts():
     return render_template('admin/pending-accounts.html')
+
+@app.route('/admin/pending-accounts/get')
+def get_pending_accounts():
+    result = model.get_pending_officials()
+
+    return jsonify({"accounts": result[1]})
