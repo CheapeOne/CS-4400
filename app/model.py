@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
     
     cursor = db.cursor()
@@ -66,13 +66,13 @@ def get_pending_officials():
 
     cursor.execute(query)
 
-    print("Results...")
+    print(cursor.fetchall())
 
     for row in cursor:
         print(row)
 
     disconnect(db, cursor)
-
+    return (True, "yay")
 
 def unpend_user(username, status):
     db, cursor = connect()
@@ -113,7 +113,7 @@ def add_point(location, timeanddate, Type, Value):
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point WHERE status = 'pending'"
+    query = "SELECT * FROM Data_Point WHERE Approved = 'pending'"
 
     cursor.execute(query)
 
@@ -159,7 +159,7 @@ def flag_location(name, status):
     cursor.execute(query, (name))
     if cursor.execute == "":
         return "doesnt exist"
-    sql = "UPDATE POI set status = status"
+    sql = "UPDATE POI set Flagged = 'status'"
     cursor.execute(sql, (status))
     print("Results...")
 
