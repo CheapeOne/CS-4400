@@ -24,7 +24,7 @@ CREATE TABLE POI (
   State     VARCHAR(100) NOT NULL,
   Zip_Code    CHAR(5),
   Flagged   TINYINT(1) DEFAULT 0,
-  Date_Flagged    DATE,
+  Date_Flagged    DATE NULL,
   PRIMARY KEY (Location_Name),
   FOREIGN KEY (City, State) REFERENCES City_State (City, State)
   ON DELETE CASCADE

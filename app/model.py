@@ -4,7 +4,7 @@ import pymysql
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
-    
+
     cursor = db.cursor()
 
     return db, cursor
@@ -15,7 +15,7 @@ def disconnect(db, cursor):
     db.close()
 
 
-def login_user(username, password):
+def check_user(username, password):
     db, cursor = connect()
     query = "SELECT Username, Password FROM User WHERE Username = '%s' AND Password = '%s'" % (username, password)
     cursor.execute(query)
@@ -109,7 +109,7 @@ def add_point(location, timeanddate, Type, Value):
     query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')"% locals()
 
     cursor.execute(query)
-  
+
     disconnect(db, cursor)
 
 

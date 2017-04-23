@@ -66,19 +66,18 @@ random_datetimes = [
 
 time.strftime('%Y-%m-%d %H:%M:%S')
 
-#
-# # CityStates
-#
-# for city in city_states_list:
-#     city_state = city_states_list[city]
-#     insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals()
-#     print(insert)
-#     try:
-#         cur.execute(insert)
-#     except pymysql.err.DataError as e:
-#         print ("The following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
+
+# CityStates
+
+for city in city_states_list:
+    city_state = city_states_list[city]
+    insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 #
 # # Admins
 # try:
@@ -154,20 +153,20 @@ time.strftime('%Y-%m-%d %H:%M:%S')
 
 # POI Locations
 
-cur.execute("INSERT into POI VALUES ('Georgia Tech', 'Atlanta', 'Georgia', '30332', 1, '2017-02-23')")
-cur.execute("INSERT into POI VALUES ('GSU', 'Atlanta', 'Georgia', '30303', 0, '')")
-cur.execute("INSERT into POI VALUES ('Emory', 'Atlanta', 'Georgia', '30322', 0, '')")
-cur.execute("INSERT into POI VALUES ('Uchicago', 'Chicago', 'Illinois', '60637', 1, '2017-02-24')")
+cur.execute("INSERT INTO POI VALUES ('Georgia Tech', (SELECT City FROM City_State WHERE City = 'Atlanta'), (SELECT State FROM City_State WHERE State = 'Georgia'), '30332', 1, '2017-02-23')")
+cur.execute("INSERT INTO POI VALUES ('GSU', (SELECT City FROM City_State WHERE City = 'Atlanta'), (SELECT State FROM City_State WHERE State = 'Georgia'), '30303', 0, NULL)")
+cur.execute("INSERT INTO POI VALUES ('Emory', (SELECT City FROM City_State WHERE City = 'Atlanta'), (SELECT State FROM City_State WHERE State = 'Georgia'), '30322', 0, NULL)")
+cur.execute("INSERT INTO POI VALUES ('Uchicago', (SELECT State FROM City_State WHERE City = 'Chicago'), (SELECT State FROM City_State WHERE State = 'Illinois'), '60637', 1, '2017-02-24')")
 
-for num in range(6):
-    loc = rand.choice(random_locations)
-    insert = "INSERT into POI VALUES ('%s', '%s', '%s', '%s', 0, '')" % (loc[0], loc[1], loc[2], loc[3])
-    try:
-        cur.execute(insert)
-    except pymysql.err.DataError as e:
-        print ("The following query failed:")
-        print (insert)
-        print("Error: {0}".format(e))
+# for num in range(6):
+#     loc = rand.choice(random_locations)
+#     insert = "INSERT into POI VALUES ('%s', '%s', '%s', '%s', 0, '')" % (loc[0], loc[1], loc[2], loc[3])
+#     try:
+#         cur.execute(insert)
+#     except pymysql.err.DataError as e:
+#         print ("The following query failed:")
+#         print (insert)
+#         print("Error: {0}".format(e))
 #
 # # Data Points
 #

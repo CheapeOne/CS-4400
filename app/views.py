@@ -12,7 +12,7 @@ def home():
 def login():
     error = None
     if request.method == 'POST':
-        result = model.login_user(request.form["username"], request.form["password"])
+        result = model.check_user(request.form["username"], request.form["password"])
         if result == None:
             return render_template('login.html', error='Invalid Credentials. Please try again.')
 
