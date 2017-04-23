@@ -111,6 +111,13 @@ def get_search_results():
 def poi_report():
     return render_template('city-official/poi-report.html')
 
+@app.route('/city-official/poi-report/make')
+def make_poi_report():
+    result = model.make_report()
+    return jsonify({"report": result[1]})
+
+
+
 # These should only be accessible if you have admin authorization
 
 

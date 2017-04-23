@@ -210,7 +210,10 @@ def flag_location(name, status):
     disconnect(db, cursor)
 
 
-def make_report(Type, valueL, valueU, time_dateL, time_dateU):
+def make_report():
+
+    return (True, "here's the nothing")
+
     db, cursor = connect()
 
     query = "SELECT * FROM Data_Point where Type = '%(Type)s' UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN '%(valueL)s' AND '%(valueU)s' UNION SELECT * from Data_Point WHERE time_date BETWEEN '%(time_dateL)s' AND '%(time_dateU)s'" % locals()
