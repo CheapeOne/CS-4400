@@ -1,5 +1,6 @@
 import pymysql
 import random as rand
+import sys
 
 db = pymysql.connect(host="127.0.0.1",
                      user="root",
@@ -67,120 +68,133 @@ for city in city_states_list:
     print(insert)
     try:
         cur.execute(insert)
-    except pymysql.ProgrammingError:
+    except pymysql.err.DataError as e:
         print ("The following query failed:")
         print (insert)
+        print("Error: {0}".format(e))
 
-# # Admins
+# Admins
+try:
+    cur.execute("INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
+except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print ("INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
+        print("Error: {0}".format(e))
 
-# cur.execute(
-#     "INSERT into User VALUES (\"admin0@example\.com\", \"admin\", \"admin\", \"admin\")")
+for num in range(1, 5):
+    insert = "INSERT into User VALUES ('admin%(num)s@example\.com', 'admin%(num)s', 'admin%(num)s', 'admin')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
-# for num in range(1, 5):
-#     insert = "INSERT into User VALUES (\"admin{num}@example\.com\", \"admin{num}\", \"admin{num}\", \"admin\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+# City Scientists
 
-# # City Scientists
+for num in range(10):
+    insert = "INSERT into User VALUES ('scientist%(num)s@example\.com', 'scientist%(num)s', 'scientist%(num)s', 'city scientist')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
-# for num in range(10):
-#     insert = "INSERT into User VALUES (\"scientist{num}@example\.com\", \"scientist{num}\", \"scientist{num}\", \"city scientist\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+# City Officials
 
-# # City Officials
+for num in range(10):
+    insert = "INSERT into User VALUES ('official%(num)s@example.com', 'official%(num)s', 'official%(num)s', 'city official')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print("The following query failed:")
+        print(insert)
+        print("Error: {0}".format(e))
 
-# for num in range(10):
-#     insert = "INSERT into User VALUES (\"official{num}@example\.com\", \"official{num}\", \"official{num}\", \"city official\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+for num in range(0, 3):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'pending')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
-# for num in range(0, 3):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = \"official{num}\"), \"{city}\", \"{state}\", \"pending\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+for num in range(3, 6):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'rejected')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
-# for num in range(3, 6):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = \"official{num}\"), \"{city}\", \"{state}\", \"rejected\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+for num in range(6, 10):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'approved')" % locals()
+    try:
+        cur.execute(insert)
+    except pymysql.err.DataError as e:
+        print ("The following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
-# for num in range(6, 11):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = \"official{num}\"), \"{city}\", \"{state}\", \"approved\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
 
 # POI Locations
 
-# cur.execute("INSERT into POI_Location VALUES (\"Georgia Tech\", \"Atlanta\", \"Georgia\", \"30332\", \"Yes\", \"02/23/2017\")")
+# cur.execute("INSERT into POI_Location VALUES ('Georgia Tech', 'Atlanta', 'Georgia', '30332', 'Yes', '02/23/2017')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"GSU\", \"Atlanta\", \"Georgia\", \"30303\" \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('GSU', 'Atlanta', 'Georgia', '30303' 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"Emory\", \"Atlanta\", \"Georgia\", \"30322\", \"No\", \"\")")
-# cur.execute("INSERT into POI_Location VALUES (\"Uchicago\", \"Chicago\", \"Illinois\", \"60637\", \"Yes\", \"02/24/2017\")")
+#     "INSERT into POI_Location VALUES ('Emory', 'Atlanta', 'Georgia', '30322', 'No', '')")
+# cur.execute("INSERT into POI_Location VALUES ('Uchicago', 'Chicago', 'Illinois', '60637', 'Yes', '02/24/2017')")
 
 # # TODO: 6 POI locations
 
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 # cur.execute(
-#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+#     "INSERT into POI_Location VALUES ('', '', '', '', 'No', '')")
 
 # Data Points
+# try:
+#     cur.execute(
+#         "INSERT into Data_Points VALUES ('Georgia Tech', '01/31/2017 15:32', '12', 'Mold', 'approved')")
+#     cur.execute(
+#         "INSERT into Data_Points VALUES ('Georgia Tech', '02/15/2017 16:12', '42', 'Mold', 'approved')")
+#     cur.execute(
+#         "INSERT into Data_Points VALUES ('Georgia Tech', '02/24/2017 4:29', '4', 'Air Quality', 'approved')")
+#     cur.execute(
+#         "INSERT into Data_Points VALUES ('Georgia Tech', '02/01/2017 3:57', '34', 'Air Quality', 'approved')")
+# except pymysql.err.DataError as e:
+#     print("Error: {0}".format(e))
 
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\", \"approved\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/15/2017 16:12\", \"42\", \"Mold\", \"approved\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/24/2017 4:29\", \"4\", \"Air Quality\", \"approved\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/01/2017 3:57\", \"34\", \"Air Quality\", \"approved\")")
+# random_value = rand.randint(100)
 
+# try:
+#     for num in range(9):
+#         insert = "INSERT into Data_Points VALUES ('Georgia Tech', '01/31/2017 15:32', '%s', 'Mold', 'approved')" % (rand.randint(100))
+#         cur.execute(insert)
+# except pymysql.err.DataError as e:
+#     print ("The following query failed:")
+#     print (insert)
+#     print("Error: {0}".format(e))
 
-
-random_value = rand.randint(100)
-
-for num in range(9):
-    insert = "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", '%s', \"Mold\", \"approved\")") % (rand.randint(100))
-        cur.execute(insert)
-    except pymysql.ProgrammingError:
-        print ("The following query failed:")
-        print (insert)
-
-TODO: 36 data points
+# TODO: 36 data points
 
 db.commit()
 db.close()
