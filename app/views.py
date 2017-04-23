@@ -70,11 +70,13 @@ def add_location():
 def validate_location():
     print("Adding poi location")
 
-    result = model.add_location(request.form["name"], request.form["city"], request.form["state"], request.form["zip"])
+    result = model.add_location(request.form["poi"], request.form["city"], request.form["state"], request.form["zip"])
 
     # Regardless of success or failure, keep us on the add location page and show a message.
     flash(result[1])
     return jsonify({"destination": url_for('add_location')})
+
+
 
 # These should only be accessible if you have city official authorization
 
@@ -89,11 +91,20 @@ def search():
     return render_template('city-official/search.html')
 
 
-@app.route('/city-official/poi-search/get-results', methods=['GET'])
+@app.route('/city-official/poi-search/get-results')
 def get_search_results():
-    result = model.get_locations(request.form["poi"], request.form["city"], request.form["state"], request.form["zipcode"])
+    print("HYHEYHEYHEYHEY")
 
-    return jsonify({"msg": result[1]})
+    # WORK IN PROGRESS
+    #zipcode = request.form["zipcode"] or None
+    flagged = request.form["flagged"] or None
+    #flagged_after = request.form["flagged-after"] or None
+    #flagged_before = request.form["flagged-before"] or None
+
+
+    #result = model.search_locations(request.form["poi"], request.form["city"], request.form["state"], request.form["zipcode"], request.form["flagged"], request.form["flagged-after"], request.form["flagged-before"])
+
+    return jsonify({"msg": "woop"})
 
 
 @app.route('/city-official/poi-report')

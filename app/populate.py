@@ -5,7 +5,7 @@ import time
 
 db = pymysql.connect(host="127.0.0.1",
                      user="root",
-                     passwd="kimo64",
+                     passwd="cheape42",
                      db="cs4400db"
                      )
 
