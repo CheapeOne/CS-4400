@@ -4,12 +4,33 @@
 
 <div class="row justify-content-md-center">
 
-    <div class="col-md-8">
-        <h1 class="black">WIP Report Page</h1>
-        <hr>
-        <div class="card home-card text-center">
+    <div class="col-md-12">
+        <h1 class="black">POI Report</h1>
+        <br>
+
+        <div class="card">
           <div class="card-block">
-            
+            <h4 class="card-title"></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>POI Location</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Mold Min</th>
+                        <th>Mold Avg</th>
+                        <th>Mold Max</th>
+                        <th>AQ Min</th>
+                        <th>AQ Avg</th>
+                        <th>AQ Max</th>
+                        <th># of Data Points</th>
+                        <th>Flagged?</th>
+                    </tr>
+                </thead>
+                <tbody id="report">
+                    <!-- We for loop through this part after getting DB response -->
+                </tbody>
+            </table>
           </div>
         </div>    
     </div>
