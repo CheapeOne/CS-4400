@@ -1,10 +1,12 @@
 import pymysql
-from flask import Flask, url_for, render_template, request, jsonify, redirect, flash
+
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='kimo64', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+
     cursor = db.cursor()
+
     return db, cursor
 
 
@@ -15,27 +17,22 @@ def disconnect(db, cursor):
 
 def check_user(username, password):
     db, cursor = connect()
-
-    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals()
+    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals(
+    )
     cursor.execute(query)
     row = cursor.fetchone()
+    if username == "":
+        return(False, "Login Failed: Empty username field")
+
+    if password == "":
+        return(False, "Login Failed: Empty password field")
+    sql = "SELECT username from User where  Username = '%(username)s'" % locals(
+    )
+    if cursor.execute(sql) == '':
+        return(False, "Username or Password are wrong")
 
     disconnect(db, cursor)
-
-    return row;
-
-
-def get_user_type(username):
-    db, cursor = connect()
-
-    query = "SELECT User_Type FROM User WHERE Username = '%(username)s'" % locals()
-    cursor.execute(query)
-    row = cursor.fetchone()
-
-    disconnect(db, cursor)
-
-    return row;
-
+    return (True, "yay")
 
 
 def add_user(emailaddress, user, password, confirm, Type):
@@ -176,7 +173,7 @@ def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, fla
         poi = '0'
     else:
         poi == '1'
-
+    
 
     return (True, "WOAH hey this is not actually working how about that")
 
