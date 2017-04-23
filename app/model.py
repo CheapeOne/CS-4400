@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -122,14 +122,17 @@ def get_pending_points():
     disconnect(db, cursor)
 
 
-def add_location(name, city, state, zip):
+def add_location(name, city, state, zipcode):
+
     db, cursor = connect()
 
-    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES (name, zip, city, state)"
-
+    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES ('%(name)s', '%(zipcode)s', '%(city)s', '%(state)s')" % locals()
+    print(query)
     cursor.execute(query)
 
     disconnect(db, cursor)
+
+    return (True, "Fake success")
 
 
 def get_locations():

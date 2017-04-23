@@ -19,7 +19,7 @@ def validate_login():
     print("Logging in a user...")
 
     result = model.login_user(request.form["username"], request.form["password"])
-    
+
     if result[0]:
         pass
         # TODO: go to the appropriate login page for the person.
@@ -80,7 +80,9 @@ def validate_location():
 
     result = model.add_location(request.form["name"], request.form["city"], request.form["state"], request.form["zip"])
 
-    return jsonify({"msg": result[1]})
+    # Regardless of success or failure, keep us on the add location page and show a message.
+    flash(result[1])
+    return jsonify({"destination": url_for('add_location')})
 
 # These should only be accessible if you have city official authorization
 
@@ -93,6 +95,7 @@ def city_official():
 @app.route('/city-official/poi-search')
 def search():
     return render_template('city-official/search.html')
+
 
 @app.route('/city-official/poi-search/get-results', methods=['GET'])
 def get_search_results():
