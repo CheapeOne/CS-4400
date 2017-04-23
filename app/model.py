@@ -165,7 +165,6 @@ def add_location(poilocation, city, state, zip):
         return (True, "Location Added!")
 
 
-
 def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
 
