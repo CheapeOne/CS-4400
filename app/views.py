@@ -128,7 +128,7 @@ def poi_detail():
 
 @app.route('/city-official/poi-detail/details')
 def get_poi_detail():
-    result = model.make_report()
+    result = model.get_poi_details()
     return jsonify({"report": result[1]})
 
 @app.route('/city-official/poi-report')
@@ -137,8 +137,8 @@ def poi_report():
 
 @app.route('/city-official/poi-report/make')
 def make_poi_report():
-    result = model.get_poi_details()
-    return jsonify({"detail": result[1]})
+    result = model.make_report()
+    return jsonify({"report": result[1]})
 
 
 

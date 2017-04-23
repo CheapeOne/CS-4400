@@ -201,7 +201,7 @@ def flag_location(name, status):
     disconnect(db, cursor)
 
 
-def make_report(Type, valueL, valueU, time_dateL, time_dateU):
+def make_report():
     db, cursor = connect()
 
     query = "SELECT * from (select POI_Location_Name, City, State, min(Data_Value) as min_value_mold, AVG(Data_Value) as avg_value_mold, MAX(Data_Value) as max_value_mold, COUNT(Data_Value) as count_mold, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as A natural join (select POI_Location_Name, City, State, min(Data_Value) as min_value_airquality, AVG(Data_Value) as avg_value_airquality, MAX(Data_Value) as max_value_airquality, COUNT(Data_Value) as count_airquality, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as B"
