@@ -136,8 +136,9 @@ def accept_pending_point():
     poi = request.args.get('poi')
     time = request.args.get('time')
 
-    #result = model.set_official_status(username, 'approved')
+    result = model.set_point_status(poi, time, 'approved')
 
+    flash(result[1])
     return render_template('admin/pending-points.html')
 
 
@@ -146,8 +147,9 @@ def reject_pending_point():
     poi = request.args.get('poi')
     time = request.args.get('time')
 
-    #result = model.set_official_status(username, 'rejected')
+    result = model.set_point_status(poi, time, 'rejected')
 
+    flash(result[1])
     return render_template('admin/pending-points.html')
 
 
@@ -169,6 +171,7 @@ def accept_pending_account():
 
     result = model.set_official_status(username, 'approved')
 
+    flash(result[1])
     return render_template('admin/pending-accounts.html')
 
 
@@ -178,6 +181,7 @@ def reject_pending_account():
 
     result = model.set_official_status(username, 'rejected')
 
+    flash(result[1])
     return render_template('admin/pending-accounts.html')
 
 @app.route('/city-state/states')

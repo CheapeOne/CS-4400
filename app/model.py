@@ -86,7 +86,7 @@ def set_official_status(username, status):
 
     disconnect(db, cursor)
 
-    return (True, "Unpending successful")
+    return (True, "Account status updated!")
 
 
 def add_point(location, timeanddate, Type, Value):
