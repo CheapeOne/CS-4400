@@ -2,7 +2,8 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Elite12$', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
+    db = pymysql.connect(host='localhost', port=3306, user='root',
+                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
 
@@ -16,15 +17,17 @@ def disconnect(db, cursor):
 
 def check_user(username, password):
     db, cursor = connect()
-    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals()
+    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals(
+    )
     cursor.execute(query)
     row = cursor.fetchone()
     if username == "":
         return(False, "Login Failed: Empty username field")
-    
-    if  password== "":
+
+    if password == "":
         return(False, "Login Failed: Empty password field")
-    sql = "SELECT username from User where  Username = '%(username)s'"%locals()
+    sql = "SELECT username from User where  Username = '%(username)s'" % locals(
+    )
     if cursor.execute(sql) == '':
         return(False, "Username or Password are wrong")
 
@@ -70,16 +73,18 @@ def get_pending_officials():
     cursor.execute(query)
 
     data = cursor.fetchall()
-    
+
     disconnect(db, cursor)
     return (True, data)
+
 
 def set_official_status(username, status):
     db, cursor = connect()
 
     print(username, status)
 
-    sql = "UPDATE City_Official SET Approved = '%(status)s' WHERE username = '%(username)s'" % locals()
+    sql = "UPDATE City_Official SET Approved = '%(status)s' WHERE username = '%(username)s'" % locals(
+    )
     print(sql)
     cursor.execute(sql)
     db.commit()
@@ -88,15 +93,17 @@ def set_official_status(username, status):
 
     return (True, "Account status updated!")
 
-def set_point_status(poi,time,status):
+
+def set_point_status(poi, time, status):
     db, cursor = connect()
 
-    sql = "UPDATE Data_Point SET Accepted = '%(status)s' WHERE username = '%(username)s'" % locals()
+    sql = "UPDATE Data_Point SET Accepted = '%(status)s', Date_Time = Date_Time WHERE POI_Location_Name = '%(poi)s' AND Date_Time = '%(time)s" % locals()
 
     cursor.execute(sql)
-    db,commit()
-    disconnect(db,cursor)
-    return(True,"done")
+    db.commit()
+    disconnect(db, cursor)
+    return(True, "Point status updated!")
+
 
 def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
@@ -128,6 +135,7 @@ def get_pending_points():
 
     disconnect(db, cursor)
 
+
 def add_location(poilocation, city, state, zip):
     db, cursor = connect()
     locationexists = "SELECT count(Location_Name) from poi where Location_Name = '%(poilocation)s'" % locals()
@@ -147,6 +155,7 @@ def add_location(poilocation, city, state, zip):
         disconnect(db, cursor)
 
         return (True, "Location Added!")
+
 
 
 def get_locations():
@@ -170,12 +179,12 @@ def get_locations():
 def flag_location(name, status):
     db, cursor = connect()
 
-    query = "SELECT * FROM POI WHERE Location_Name='%(name)s'"%locals()
+    query = "SELECT * FROM POI WHERE Location_Name='%(name)s'" % locals()
 
     cursor.execute(query)
     if cursor.execute == "":
-        return (False,"doesnt exist")
-    sql = "UPDATE POI set Flagged = '%(status)s'"%locals()
+        return (False, "doesnt exist")
+    sql = "UPDATE POI set Flagged = '%(status)s'" % locals()
     cursor.execute(sql)
     print("Results...")
 
@@ -188,31 +197,26 @@ def flag_location(name, status):
 def make_report(Type, valueL, valueU, time_dateL, time_dateU):
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point where Type = '%(Type)s' UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN '%(valueL)s' AND '%(valueU)s' UNION SELECT * from Data_Point WHERE time_date BETWEEN '%(time_dateL)s' AND '%(time_dateU)s'"%locals()
+    query = "SELECT * FROM Data_Point where Type = '%(Type)s' UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN '%(valueL)s' AND '%(valueU)s' UNION SELECT * from Data_Point WHERE time_date BETWEEN '%(time_dateL)s' AND '%(time_dateU)s'" % locals()
 
     cursor.execute(query)
 
     data = cursor.fetchall()
-    
+
     disconnect(db, cursor)
-    
+
     return (True, data)
 
-def poi_detail(Type,ValueL,ValueU,tdL,tdU):
-    db , cursor = connect()
 
-    query = "SELECT * FFROM DATA_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'"%locals()
+def poi_detail(Type, ValueL, ValueU, tdL, tdU):
+    db, cursor = connect()
+
+    query = "SELECT * FROM DATA_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'" % locals()
 
     cursor.execute(query)
 
     data = cursor.fetchall()
-    
+
     disconnect(db, cursor)
-    
+
     return (True, data)
-    
-
-
-
-
-    
