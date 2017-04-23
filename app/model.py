@@ -2,7 +2,12 @@ import pymysql
 
 
 def connect():
+<<<<<<< HEAD
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
+=======
+    db = pymysql.connect(host='localhost', port=3306,
+                         user='root', passwd='cheape42', db='cs4400db')
+>>>>>>> b80a467c6c0ca611a3264d9f47fddd0fc22f30f9
 
     cursor = db.cursor()
 
@@ -133,6 +138,9 @@ def add_location(name, city, state, zip):
 
 
 def get_locations():
+
+    return (True, "WOAH hey this is not actually working how about that")
+
     db, cursor = connect()
 
     query = "SELECT * FROM POI"

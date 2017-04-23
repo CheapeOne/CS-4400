@@ -24,6 +24,22 @@
     </a>
   </nav>
 
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      
+      {% for message in messages %}
+
+        <div class="alert">
+          <button class="close" aria-label="Close" data-dismiss="alert" type="button">
+            <span aria-hidden="true">×</span>  
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
   <div class="container">
   <!-- Here will be placed each derived page's content (see home.html, login.html etc. -->
     {% block content %}{% endblock content %}
@@ -39,6 +55,8 @@
   <!-- Bootstrap Datepicker JS -->
   <!-- Documentation here https://bootstrap-datepicker.readthedocs.io/en/latest/index.html -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script> -->
+
+  <script src="{{url_for('static', filename='js/base.js')}}"></script>
 
   {% block js %}
 
