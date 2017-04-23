@@ -2,8 +2,9 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
 
+    
     cursor = db.cursor()
 
     return db, cursor
@@ -102,13 +103,11 @@ def add_point(location, timeanddate, Type, Value):
     except:
         return(False,"Please enter an integer for Data Value.")
 
-    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')"% locals()
 
     cursor.execute(query)
   
     disconnect(db, cursor)
-
-    return(True, "Success!")
 
 
 def get_pending_points():
@@ -124,17 +123,14 @@ def get_pending_points():
     disconnect(db, cursor)
 
 
-def add_location(name, city, state, zipcode):
-
+def add_location(name, city, state, zip):
     db, cursor = connect()
 
-    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES ('%(name)s', '%(zipcode)s', '%(city)s', '%(state)s')" % locals()
-    print(query)
+    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES (name, zip, city, state)"
+
     cursor.execute(query)
 
     disconnect(db, cursor)
-
-    return (True, "Fake success")
 
 
 def get_locations():

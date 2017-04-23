@@ -66,7 +66,7 @@ def validate_point():
 
     # Regardless of success or failure, keep us on the add point page and show a message.
     flash(result[1])
-    return jsonify({"destination": url_for('add-point')})
+    return jsonify({"destination": url_for('add_point')})
 
 
 @app.route('/city-scientist/add-location')
