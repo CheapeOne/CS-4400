@@ -1,11 +1,6 @@
 from app import app
 from app import model
-<<<<<<< Updated upstream
-import flask
-from flask import Flask, url_for, render_template, request, jsonify, flash
-=======
-from flask import Flask, url_for, render_template, request, jsonify, redirect
->>>>>>> Stashed changes
+from flask import Flask, url_for, render_template, request, jsonify, redirect, flash
 
 
 @app.route('/')
