@@ -1,3 +1,9 @@
+// A $( document ).ready() block.
+$( document ).ready(function() {
+    addLocations("#poi-input");
+    addDataTypes("#type-input");
+});
+
 $('#add-point-form').submit(false); // stop redirect
 
 function submitPoint(){

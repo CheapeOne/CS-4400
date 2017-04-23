@@ -106,6 +106,8 @@ def add_point(location, timeanddate, Type, Value):
     db.commit()
     disconnect(db, cursor)
 
+    return (True, "Point added!")
+
 
 def get_pending_points():
     db, cursor = connect()
@@ -210,6 +212,14 @@ def get_states():
 def get_cities():
     db, cursor = connect()
     query = "SELECT DISTINCT City FROM City_State"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
+def get_data_types():
+    db, cursor = connect()
+    query = "SELECT DISTINCT Type FROM Data_Type"
     cursor.execute(query)
     data = cursor.fetchall()
     disconnect(db, cursor)

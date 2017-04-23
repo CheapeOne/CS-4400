@@ -15,7 +15,6 @@ function addState(state, dropdownId) {
     `);
 }
 
-// Add universal javascript here
 function addCities(dropdownId){
     console.log("Getting Cities...");
     $.get( '/city-state/cities').done(function (data){
@@ -32,7 +31,6 @@ function addCity(city, dropdownId) {
     `);
 }
 
-// Add universal javascript here
 function addLocations(dropdownId){
     console.log("Getting POIs...");
     $.get( '/poi/locations').done(function (data){
@@ -46,5 +44,21 @@ function addLocations(dropdownId){
 function addLocation(location, dropdownId) {
     $(dropdownId).append(`
         <option>`+ location.Location_Name +`</option>
+    `);
+}
+
+function addDataTypes(dropdownId){
+    console.log("Getting Data Types...");
+    $.get( '/data-type/types').done(function (data){
+        data.types.forEach(function(type){
+            addDataType(type, dropdownId);
+        });
+        console.log("Got data types!");
+    });
+}
+
+function addDataType(type, dropdownId) {
+    $(dropdownId).append(`
+        <option>`+ type.Type +`</option>
     `);
 }

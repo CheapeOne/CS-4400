@@ -194,6 +194,13 @@ def get_cities():
 
     return jsonify({"cities": result[1]})
 
+@app.route('/data-type/types')
+def get_data_types():
+
+    result = model.get_data_types()
+
+    return jsonify({"types": result[1]})
+
 @app.route('/poi/locations')
 def get_all_locations():
 
