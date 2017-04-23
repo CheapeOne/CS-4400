@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Elite12$', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
 
@@ -125,14 +125,25 @@ def set_point_status(location, time, status):
     pass
 
 
-def add_location(poi, city, state, zip):
+def add_location(poilocation, city, state, zip):
     db, cursor = connect()
-    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES ('%(poi)s', %(zip)s, '%(city)s', '%(state)s')" % locals()
-    cursor.execute(query)
-    db.commit()
-    disconnect(db, cursor)
+    locationexists = "SELECT count(Location_Name) from poi where Location_Name = '%(poilocation)s'" % locals()
+    cursor.execute(locationexists)
+    locationcount = cursor.fetchall()
+    if locationcount[0]['count(Location_Name)'] != 0:
+        return(False, "This location already exists.")
+    elif len(zip) != 5:
+        return(False, "Please enter a valid zip code.")
+    else:
+        try:
+            query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES ('%(poilocation)s', %(zip)s, '%(city)s', '%(state)s')" % locals()
+            cursor.execute(query)
+        except:
+            return(False, "This location does not exist.")
+        db.commit()
+        disconnect(db, cursor)
 
-    return (True, "Location Added!")
+        return (True, "Location Added!")
 
 
 def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
