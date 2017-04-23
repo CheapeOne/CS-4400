@@ -115,7 +115,7 @@ for num in range(10):
 for num in range(0, 3):
     city = rand.choice(list(city_states_list))
     state = city_states_list[city]
-    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'pending')" % locals()
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Parks and Rec', '%(city)s', '%(state)s', 'pending')" % locals()
     try:
         cur.execute(insert)
     except pymysql.err.DataError as e:
@@ -126,7 +126,7 @@ for num in range(0, 3):
 for num in range(3, 6):
     city = rand.choice(list(city_states_list))
     state = city_states_list[city]
-    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'rejected')" % locals()
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Sanitation', '%(city)s', '%(state)s', 'rejected')" % locals()
     try:
         cur.execute(insert)
     except pymysql.err.DataError as e:
@@ -137,7 +137,7 @@ for num in range(3, 6):
 for num in range(6, 10):
     city = rand.choice(list(city_states_list))
     state = city_states_list[city]
-    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), '%(city)s', '%(state)s', 'approved')" % locals()
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'City Manager', '%(city)s', '%(state)s', 'approved')" % locals()
     try:
         cur.execute(insert)
     except pymysql.err.DataError as e:
