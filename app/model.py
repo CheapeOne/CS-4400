@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='kimo64', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
 
@@ -172,7 +172,7 @@ def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, fla
 
     db, cursor = connect()
 
-    query = "SELECT * FROM POI"
+    query = "SELECT * FROM POI where Location_Name='%(poi)s' AND City = '%(city)s' AND State = '%(state)s' AND,Zip_Code =  '%(zipcode)s' AND Flagged = '%(flagged)s'"%locals()
 
     cursor.execute(query)
 
