@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
 
     cursor = db.cursor()
@@ -31,6 +31,7 @@ def check_user(username, password):
 
     disconnect(db, cursor)
     return row
+
 
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
@@ -65,34 +66,28 @@ def add_user(emailaddress, user, password, confirm, Type):
 def get_pending_officials():
     db, cursor = connect()
 
-    query = "SELECT * FROM City_Official WHERE Approved = 'pending'"
+    query = "SELECT o.Username, o.Title, o.City, o.State, o.Approved, u.Email FROM City_Official o JOIN User u ON o.Username = u.Username WHERE o.Approved = 'pending'"
 
     cursor.execute(query)
 
-    print(cursor.fetchall())
-
-    for row in cursor:
-        print(row)
-
+    data = cursor.fetchall()
+    
     disconnect(db, cursor)
-    return (True, "yay")
+    return (True, data)
 
-def unpend_user(username, status):
+def set_official_status(username, status):
     db, cursor = connect()
 
-    query = "SELECT * from User where username = username"
+    print(username, status)
 
-    cursor.execute(query, (username))
-    if cursor.execute == "":
-        return "Please enter username"
-    sql = "UPDATE City Officials set status = %(status)s" % locals()
-    cursor.execute(sql, (status))
-    print("Results...")
-
-    for row in cursor:
-        print(row)
+    sql = "UPDATE City_Official SET Approved = '%(status)s' WHERE username = '%(username)s'" % locals()
+    print(sql)
+    cursor.execute(sql)
+    db.commit()
 
     disconnect(db, cursor)
+
+    return (True, "Unpending successful")
 
 
 def add_point(location, timeanddate, Type, Value):
@@ -104,9 +99,9 @@ def add_point(location, timeanddate, Type, Value):
     try:
         int(Value)
     except:
-        return(False,"Please enter an integer for Data Value.")
+        return(False, "Please enter an integer for Data Value.")
 
-    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')"% locals()
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
 
     cursor.execute(query)
 

@@ -112,6 +112,7 @@ def admin():
 def pending_points():
     return render_template('admin/pending-points.html')
 
+
 @app.route('/admin/pending-points/get')
 def get_pending_points():
     result = model.get_pending_points()
@@ -123,8 +124,27 @@ def get_pending_points():
 def pending_accounts():
     return render_template('admin/pending-accounts.html')
 
+
 @app.route('/admin/pending-accounts/get')
 def get_pending_accounts():
     result = model.get_pending_officials()
 
     return jsonify({"accounts": result[1]})
+
+
+@app.route('/admin/pending-accounts/accept')
+def accept_pending_account():
+    username = request.args.get('user')
+
+    result = model.set_official_status(username, 'approved')
+
+    return render_template('admin/pending-accounts.html')
+
+
+@app.route('/admin/pending-accounts/reject')
+def reject_pending_accounts():
+    username = request.args.get('user')
+
+    result = model.set_official_status(username, 'rejected')
+
+    return render_template('admin/pending-accounts.html')
