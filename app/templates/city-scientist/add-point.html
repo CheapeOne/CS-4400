@@ -21,7 +21,7 @@
 
                 <div class="form-group">
                     <label for="time-input">Time</label>
-                    <input type="date" name="time" class="form-control" id="time-input">
+                    <input type="datetime-local" name="time" class="form-control" id="time-input">
                 </div>
 
                 <div class="form-group">
@@ -48,18 +48,6 @@
 {%- endblock content %}
 
 {% block js -%}
-
-<script>
-    $(function(){           
-        $('input[type="date"]').datepicker({
-            todayHighlight: 'true'
-        });
-
-        // Default selection is today
-        $('.datepicker').datepicker("setDate", new Date());
-    });
-
-</script>
 
 <script src="{{url_for('static', filename='js/add-point.js')}}"></script>
 
