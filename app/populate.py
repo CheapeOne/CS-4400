@@ -81,133 +81,134 @@ random_dates = [
 ]
 
 # Data Types
-#
-# try:
-#     cur.execute("INSERT INTO Data_Type VALUES ('Mold'), ('Air Quality')")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print ("\nThe following query failed:")
-#     print("Error: {0}".format(e))
 
-# # CityStates
-#
-# for city in city_states_list:
-#     city_state = city_states_list[city]
-#     insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# # Admins
-# try:
-#     cur.execute(
-#         "INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print ("\nThe following query failed:")
-#     print ("INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
-#     print("Error: {0}".format(e))
-#
-# for num in range(1, 5):
-#     insert = "INSERT into User VALUES ('admin%(num)s@example\.com', 'admin%(num)s', 'admin%(num)s', 'admin')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# # City Scientists
-#
-# for num in range(10):
-#     insert = "INSERT into User VALUES ('scientist%(num)s@example\.com', 'scientist%(num)s', 'scientist%(num)s', 'city scientist')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# # City Officials
-#
-# for num in range(10):
-#     insert = "INSERT into User VALUES ('official%(num)s@example.com', 'official%(num)s', 'official%(num)s', 'city official')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print("\nThe following query failed:")
-#         print(insert)
-#         print("Error: {0}".format(e))
-#
-# for num in range(0, 3):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Parks and Rec', '%(city)s', '%(state)s', 'pending')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# for num in range(3, 6):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Sanitation', '%(city)s', '%(state)s', 'rejected')" % locals(
-#     )
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# for num in range(6, 10):
-#     city = rand.choice(list(city_states_list))
-#     state = city_states_list[city]
-#     insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'City Manager', (SELECT City FROM City_State WHERE City = '%(city)s'), (SELECT DISTINCT State FROM City_State WHERE State = '%(state)s'), 'approved')" % locals()
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
-#
-# # POI Locations
-# try:
-#     cur.execute("INSERT INTO POI VALUES ('Georgia Tech', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30332', 1, '2017-02-23')")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print("Error: {0}".format(e))
-#
-# try:
-#     cur.execute("INSERT INTO POI VALUES ('GSU', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30303', 0, NULL)")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print("Error: {0}".format(e))
-#
-# try:
-#     cur.execute("INSERT INTO POI VALUES ('Emory', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30322', 0, NULL)")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print("Error: {0}".format(e))
-#
-# try:
-#     cur.execute("INSERT INTO POI VALUES ('Uchicago', (SELECT DISTINCT City FROM City_State WHERE City = 'Chicago'), (SELECT DISTINCT State FROM City_State WHERE State = 'Illinois'), '60637', 1, '2017-02-24')")
-# except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#     print("Error: {0}".format(e))
-#
-# for loc in random_locations:
-#     insert = "INSERT into POI VALUES ('%s', (SELECT DISTINCT City FROM City_State WHERE City = '%s'), (SELECT DISTINCT State FROM City_State WHERE State = '%s'), '%s', 0, NULL)" % (loc[0], loc[1], loc[2], loc[3])
-#     try:
-#         cur.execute(insert)
-#     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-#         print ("\nThe following query failed:")
-#         print (insert)
-#         print("Error: {0}".format(e))
+try:
+    cur.execute("INSERT INTO Data_Type VALUES ('Mold'), ('Air Quality')")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print ("\nThe following query failed:")
+    print("Error: {0}".format(e))
+
+# CityStates
+
+for city in city_states_list:
+    city_state = city_states_list[city]
+    insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+# Admins
+try:
+    cur.execute(
+        "INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print ("\nThe following query failed:")
+    print ("INSERT into User VALUES ('admin0@example\.com', 'admin', 'admin', 'admin')")
+    print("Error: {0}".format(e))
+
+for num in range(1, 5):
+    insert = "INSERT into User VALUES ('admin%(num)s@example\.com', 'admin%(num)s', 'admin%(num)s', 'admin')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+# City Scientists
+
+for num in range(10):
+    insert = "INSERT into User VALUES ('scientist%(num)s@example\.com', 'scientist%(num)s', 'scientist%(num)s', 'city scientist')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+# City Officials
+
+for num in range(10):
+    insert = "INSERT into User VALUES ('official%(num)s@example.com', 'official%(num)s', 'official%(num)s', 'city official')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print("\nThe following query failed:")
+        print(insert)
+        print("Error: {0}".format(e))
+
+for num in range(0, 3):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Parks and Rec', '%(city)s', '%(state)s', 'pending')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+for num in range(3, 6):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'Head of Sanitation', '%(city)s', '%(state)s', 'rejected')" % locals(
+    )
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+for num in range(6, 10):
+    city = rand.choice(list(city_states_list))
+    state = city_states_list[city]
+    insert = "INSERT into City_Official VALUES ((SELECT Username from User where Username = 'official%(num)s'), 'City Manager', (SELECT City FROM City_State WHERE City = '%(city)s'), (SELECT DISTINCT State FROM City_State WHERE State = '%(state)s'), 'approved')" % locals()
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
+
+# POI Locations
+
+try:
+    cur.execute("INSERT INTO POI VALUES ('Georgia Tech', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30332', 1, '2017-02-23')")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print("Error: {0}".format(e))
+
+try:
+    cur.execute("INSERT INTO POI VALUES ('GSU', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30303', 0, NULL)")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print("Error: {0}".format(e))
+
+try:
+    cur.execute("INSERT INTO POI VALUES ('Emory', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30322', 0, NULL)")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print("Error: {0}".format(e))
+
+try:
+    cur.execute("INSERT INTO POI VALUES ('Uchicago', (SELECT DISTINCT City FROM City_State WHERE City = 'Chicago'), (SELECT DISTINCT State FROM City_State WHERE State = 'Illinois'), '60637', 1, '2017-02-24')")
+except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+    print("Error: {0}".format(e))
+
+for loc in random_locations:
+    insert = "INSERT into POI VALUES ('%s', (SELECT DISTINCT City FROM City_State WHERE City = '%s'), (SELECT DISTINCT State FROM City_State WHERE State = '%s'), '%s', 0, NULL)" % (loc[0], loc[1], loc[2], loc[3])
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
 
 # Data Points
