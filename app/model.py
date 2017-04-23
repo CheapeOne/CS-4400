@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
 
     cursor = db.cursor()
@@ -20,17 +20,17 @@ def check_user(username, password):
     query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals()
     cursor.execute(query)
     row = cursor.fetchone()
-    # if username == "":
-    #     return(False, "Login Failed: Empty username field")
-    #
-    # if  == "":
-    #     return(False, "Login Failed: Empty password field")
-    #sql = "SELECT username from Users where '%(username)s' = user"%locals()
-    # if cursor.execute(sql) == '':
-    #     return(False, "Username or Password are wrong")
+    if username == "":
+        return(False, "Login Failed: Empty username field")
+    
+    if  password== "":
+        return(False, "Login Failed: Empty password field")
+    sql = "SELECT username from User where  Username = '%(username)s'"%locals()
+    if cursor.execute(sql) == '':
+        return(False, "Username or Password are wrong")
 
     disconnect(db, cursor)
-    return row
+    return (True, "yay")
 
 
 def add_user(emailaddress, user, password, confirm, Type):
@@ -152,7 +152,7 @@ def get_locations():
 def flag_location(name, status):
     db, cursor = connect()
 
-    query = "SELECT * FROM POI WHERE '%(name)s' = Location_Name"%locals()
+    query = "SELECT * FROM POI WHERE Location_Name='%(name)s'"%locals()
 
     cursor.execute(query)
     if cursor.execute == "":
