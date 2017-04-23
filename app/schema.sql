@@ -6,7 +6,7 @@ CREATE TABLE Data_Type (
 CREATE TABLE City_State (
   City      VARCHAR(100) NOT NULL,
   State     VARCHAR(100) NOT NULL,
-  PRIMARY KEY (City, State) 
+  PRIMARY KEY (City, State)
 )ENGINE=InnoDB;
 
 CREATE TABLE User (
@@ -19,24 +19,24 @@ CREATE TABLE User (
 )ENGINE=InnoDB;
 
 CREATE TABLE POI (
-  Date_Flagged    TIMESTAMP,
-  Flagged   TINYINT(1) DEFAULT 0,
   Location_Name VARCHAR(100) NOT NULL,
-  Zip_Code    CHAR(5),
   City      VARCHAR(100) NOT  NULL,
   State     VARCHAR(100) NOT NULL,
+  Zip_Code    CHAR(5),
+  Flagged   TINYINT(1) DEFAULT 0,
+  Date_Flagged    DATE,
   PRIMARY KEY (Location_Name),
   FOREIGN KEY (City, State) REFERENCES City_State (City, State)
-  ON DELETE CASCADE 
+  ON DELETE CASCADE
   ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE Data_Point (
-  Date_Time    TIMESTAMP NOT NULL,
   POI_Location_Name   VARCHAR(100) NOT NULL,
+  Date_Time    TIMESTAMP NOT NULL,
   Data_Value      FLOAT NOT NULL,
-  Accepted    ENUM('pending', 'approved', 'rejected') NOT NULL,
   Data_Type     VARCHAR(100) NOT NULL,
+  Accepted    ENUM('pending', 'approved', 'rejected') NOT NULL,
   PRIMARY KEY (Date_Time, POI_Location_Name),
   FOREIGN KEY (POI_Location_Name) REFERENCES POI(Location_Name)
   ON DELETE CASCADE
@@ -57,6 +57,6 @@ CREATE TABLE City_Official(
   ON DELETE CASCADE
   ON UPDATE CASCADE,
   FOREIGN KEY (Username) REFERENCES User (Username)
-  ON DELETE CASCADE 
+  ON DELETE CASCADE
   ON UPDATE CASCADE
 )ENGINE=InnoDB;
