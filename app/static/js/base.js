@@ -62,3 +62,7 @@ function addDataType(type, dropdownId) {
         <option>`+ type.Type +`</option>
     `);
 }
+
+function convertDateForSQL(dateTime) {
+    return new Date(dateTime).toISOString().slice(0, 19).replace('T', ' ');
+}
