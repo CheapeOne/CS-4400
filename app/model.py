@@ -17,7 +17,7 @@ def disconnect(db, cursor):
 
 def check_user(username, password):
     db, cursor = connect()
-    query = "SELECT Username, Password FROM User WHERE Username = '%s' AND Password = '%s'" % (username, password)
+    query = "SELECT Username, Password FROM User WHERE Username = '%(username)s' AND Password = '%(password)s'" % locals()
     cursor.execute(query)
     row = cursor.fetchone()
     # if username == "":
@@ -170,13 +170,31 @@ def flag_location(name, status):
 def make_report(Type, valueL, valueU, time_dateL, time_dateU):
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point where Type = Type UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN valueL AND valueU UNION SELECT * from Data_Point WHERE time_date BETWEEN time_dateL AND time_dateU"
+    query = "SELECT * FROM Data_Point where Type = '%(Type)s' UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN '%(valueL)s' AND '%(valueU)s' UNION SELECT * from Data_Point WHERE time_date BETWEEN '%(time_dateL)s' AND '%(time_dateU)s'"%locals()
 
-    cursor.execute(query, (Type, valueL, valueU, time_dateL, time_dateU))
+    cursor.execute(query)
 
-    print("Results...")
-
-    for row in cursor:
-        print(row)
-
+    data = cursor.fetchall()
+    
     disconnect(db, cursor)
+    
+    return (True, data)
+
+def poi_detail(Type,ValueL,ValueU,tdL,tdU):
+    db , cursor = connect()
+
+    query = "SELECT * FFROM DATA_Point where Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'"%locals()
+
+    cursor.execute(query)
+
+    data = cursor.fetchall()
+    
+    disconnect(db, cursor)
+    
+    return (True, data)
+    
+
+
+
+
+    
