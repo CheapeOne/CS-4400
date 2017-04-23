@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
 
@@ -97,7 +97,7 @@ def set_official_status(username, status):
 def set_point_status(poi, time, status):
     db, cursor = connect()
 
-    sql = "UPDATE Data_Point SET Accepted = '%(status)s', Date_Time = Date_Time WHERE POI_Location_Name = '%(poi)s' AND Date_Time = '%(time)s" % locals()
+    sql = "UPDATE Data_Point SET Accepted = '%(status)s', Date_Time = Date_Time WHERE POI_Location_Name = '%(poi)s' AND Date_Time = '%(time)s'" % locals()
 
     cursor.execute(sql)
     db.commit()
@@ -107,6 +107,11 @@ def set_point_status(poi, time, status):
 
 def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
+    locationtimeexists = "SELECT count(POI_Location_Name) from data_point where POI_Location_Name = '%(location)s' and Date_Time = '%(timeanddate)s'" % locals()
+    cursor.execute(locationtimeexists)
+    locationtimecount = cursor.fetchall()
+    if locationtimecount[0]['count(POI_Location_Name)'] != 0:
+        return(False, "This location already exists.")
     if Value == '':
         return(False, 'Please enter value')
     if timeanddate == '':
@@ -116,10 +121,10 @@ def add_point(location, timeanddate, Type, Value):
     except:
         return(False, "Please enter an integer for Data Value.")
 
-    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time,Accepted) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s','Pending')" % locals()
 
     cursor.execute(query)
-
+    db.commit()
     disconnect(db, cursor)
 
     return (True, "Point added!")
