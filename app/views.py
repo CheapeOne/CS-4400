@@ -22,7 +22,7 @@ def validate_login():
     # TODO: redirect based on the result. If success, log them in.
     # If failure, keep them on the login page with an error message.
 
-    return jsonify({"msg": "success"})
+    return jsonify({"msg": result[1]})
 
 
 @app.route('/register')
