@@ -35,28 +35,34 @@ city_states_list = {
     'Atlanta': 'Georgia'
 }
 
-for city in city_states_list:
-    city_state = city_states_list[city]
-    insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals()
-    print(insert)
-    try:
-        cur.execute(insert)
-    except pymysql.ProgrammingError:
-        print ("The following query failed:")
-        print (insert)
+try:
+    for city in city_states_list:
+        city_state = city_states_list[city]
+        insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals()
+        print(insert)
+        try:
+            cur.execute(insert)
+        except pymysql.ProgrammingError:
+            print ("The following query failed:")
+            print (insert)
+except:
+    pass
 
 # # Admins
 
-# cur.execute(
-#     "INSERT into User VALUES (\"admin0@example\.com\", \"admin\", \"admin\", \"admin\")")
+try:
+    cur.execute(
+        "INSERT into User VALUES (\"admin0@example\.com\", \"admin\", \"admin\", \"admin\")")
 
-# for num in range(1, 5):
-#     insert = "INSERT into User VALUES (\"admin{num}@example\.com\", \"admin{num}\", \"admin{num}\", \"admin\")"
-#     try:
-#         cur.execute(insert)
-#     except pymysql.ProgrammingError:
-#         print ("The following query failed:")
-#         print (insert)
+    for num in range(1, 5):
+        insert = "INSERT into User VALUES (\"admin%(num)s@example\.com\", \"admin%(num)s\", \"admin%(num)s\", \"admin\")" % locals()
+        try:
+            cur.execute(insert)
+        except pymysql.ProgrammingError:
+            print ("The following query failed:")
+            print (insert)
+except:
+    pass
 
 # # City Scientists
 
