@@ -34,6 +34,7 @@ city_states_list = {
 }
 
 random_locations = [
+    # Name, City, State, Zip Code
     ("Georgia Tech", "Atlanta", "Georgia", "30332"),
     ("Centennial Olympic Park", "Atlanta", "Georgia", "30313"),
     ("Emory University", "Atlanta", "Georgia", "30322"),
@@ -43,7 +44,19 @@ random_locations = [
 ]
 
 random_datetimes_list = [
-    "20120618 10:34:09 AM"
+    # YYYYMMDD HH:MM:SS
+    "20110101 01:00:00 AM",
+    "20110202 02:30:00 PM",
+    "20120303 03:00:00 AM",
+    "20120404 04:30:00 PM",
+    "20130505 05:00:00 AM",
+    "20130606 06:30:00 PM",
+    "20140707 07:00:00 AM",
+    "20140808 08:30:00 PM",
+    "20150909 09:00:00 AM",
+    "20151010 10:30:00 PM",
+    "20161111 11:00:00 AM",
+    "20161212 12:30:00 PM"
 ]
 
 # CityStates
@@ -148,23 +161,20 @@ for city in city_states_list:
 # Data Points
 
 cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\")")
+    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\", \"approved\")")
 cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/15/2017 16:12\", \"42\", \"Mold\")")
+    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/15/2017 16:12\", \"42\", \"Mold\", \"approved\")")
 cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/24/2017 4:29\", \"4\", \"Air Quality\")")
+    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/24/2017 4:29\", \"4\", \"Air Quality\", \"approved\")")
 cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/01/2017 3:57\", \"34\", \"Air Quality\")")
-
-
-rand.randint(0,9)
+    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/01/2017 3:57\", \"34\", \"Air Quality\", \"approved\")")
 
 
 
-rand.randint(0,9)
+random_value = rand.randint(100)
 
 for num in range(9):
-    insert = "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\")")
+    insert = "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", '%s', \"Mold\", \"approved\")") % (rand.randint(100))
         cur.execute(insert)
     except pymysql.ProgrammingError:
         print ("The following query failed:")

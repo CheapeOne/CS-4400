@@ -1,5 +1,5 @@
 CREATE TABLE Data_Type (
-  Type  VARCHAR(20) NOT NULL,
+  Type  VARCHAR(50) NOT NULL,
   PRIMARY KEY (Type)
 );
 
@@ -10,16 +10,16 @@ CREATE TABLE City_State (
 );
 
 CREATE TABLE User (
-  Email   VARCHAR(20) NOT NULL,
-  Username  VARCHAR(20) NOT NULL,
-  Password  VARCHAR(20) NOT NULL,
+  Email   VARCHAR(50) NOT NULL,
+  Username  VARCHAR(50) NOT NULL,
+  Password  VARCHAR(50) NOT NULL,
   User_Type   ENUM("admin", "city official", "city scientist") NOT NULL,
   PRIMARY KEY (Username),
   UNIQUE KEY (Email)
 );
 
 CREATE TABLE POI_Location (
-  Location_Name VARCHAR(40) NOT NULL,
+  Location_Name VARCHAR(50) NOT NULL,
   City      VARCHAR(50) NOT  NULL,
   State     VARCHAR(50) NOT NULL,
   Zip_Code    CHAR(5),
@@ -32,10 +32,10 @@ CREATE TABLE POI_Location (
 );
 
 CREATE TABLE Data_Point (
-  POI_Location_Name   VARCHAR(40) NOT NULL,
+  POI_Location_Name   VARCHAR(50) NOT NULL,
   Date_Time    TIMESTAMP NOT NULL,
   Data_Value      FLOAT NOT NULL,
-  Data_Type     VARCHAR(40) NOT NULL,
+  Data_Type     VARCHAR(50) NOT NULL,
   Accepted    ENUM("pending", "approved", "rejected") NOT NULL,
   PRIMARY KEY (Date_Time, POI_Location_Name),
   FOREIGN KEY (POI_Location_Name) REFERENCES POI_Location(Location_Name)
@@ -47,8 +47,8 @@ CREATE TABLE Data_Point (
 );
 
 CREATE TABLE City_Official(
-  Username  VARCHAR(20) NOT NULL,
-  Title   VARCHAR(20) NOT NULL,
+  Username  VARCHAR(50) NOT NULL,
+  Title   VARCHAR(50) NOT NULL,
   City    VARCHAR(50) NOT NULL,
   State     VARCHAR(50) NOT NULL,
   PRIMARY KEY (Username),
