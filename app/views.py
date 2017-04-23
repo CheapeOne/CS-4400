@@ -122,6 +122,10 @@ def get_search_results():
     return jsonify({"msg": "woop"})
 
 
+@app.route('/city-official/poi-detail')
+def poi_detail():
+    return render_template('city-official/poi-detail.html')
+
 @app.route('/city-official/poi-report')
 def poi_report():
     return render_template('city-official/poi-report.html')
