@@ -37,7 +37,7 @@ city_states_list = {
 
 for city in city_states_list:
     city_state = city_states_list[city]
-    insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s'"
+    insert = "INSERT into City_State VALUES ('%(city)s', '%(city_state)s')" % locals()
     print(insert)
     try:
         cur.execute(insert)
@@ -110,38 +110,38 @@ for city in city_states_list:
 
 # POI Locations
 
-cur.execute("INSERT into POI_Location VALUES (\"Georgia Tech\", \"Atlanta\", \"Georgia\", \"30332\", \"Yes\", \"02/23/2017\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"GSU\", \"Atlanta\", \"Georgia\", \"30303\" \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"Emory\", \"Atlanta\", \"Georgia\", \"30322\", \"No\", \"\")")
-cur.execute("INSERT into POI_Location VALUES (\"Uchicago\", \"Chicago\", \"Illinois\", \"60637\", \"Yes\", \"02/24/2017\")")
+# cur.execute("INSERT into POI_Location VALUES (\"Georgia Tech\", \"Atlanta\", \"Georgia\", \"30332\", \"Yes\", \"02/23/2017\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"GSU\", \"Atlanta\", \"Georgia\", \"30303\" \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"Emory\", \"Atlanta\", \"Georgia\", \"30322\", \"No\", \"\")")
+# cur.execute("INSERT into POI_Location VALUES (\"Uchicago\", \"Chicago\", \"Illinois\", \"60637\", \"Yes\", \"02/24/2017\")")
 
-# TODO: 6 POI locations
+# # TODO: 6 POI locations
 
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
-cur.execute(
-    "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
+# cur.execute(
+#     "INSERT into POI_Location VALUES (\"\", \"\", \"\", \"\", \"No\", \"\")")
 
-# Data Points
+# # Data Points
 
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/15/201716:12\", \"42\", \"Mold\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/24/2017 4:29\", \"4\", \"Air Quality\")")
-cur.execute(
-    "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/01/2017 3:57\", \"34\", \"Air Quality\")")
+# cur.execute(
+#     "INSERT into Data_Points VALUES (\"Georgia Tech\", \"01/31/2017 15:32\", \"12\", \"Mold\")")
+# cur.execute(
+#     "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/15/201716:12\", \"42\", \"Mold\")")
+# cur.execute(
+#     "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/24/2017 4:29\", \"4\", \"Air Quality\")")
+# cur.execute(
+#     "INSERT into Data_Points VALUES (\"Georgia Tech\", \"02/01/2017 3:57\", \"34\", \"Air Quality\")")
 
 # TODO: 36 data points
 

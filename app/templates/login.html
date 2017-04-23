@@ -6,10 +6,10 @@
     <div class="col-md-6">
 
         <h1 class="black">Login</h1>
-        
+
         <div class="card">
             <div class="card-block">
-            <form id="login-form">
+            <form id="login-form" action="" method="post">
                 <div class="form-group">
                     <label for="username-input">Username</label>
                     <input type="text" name="username" class="form-control" id="username-input" placeholder="Username">
@@ -25,8 +25,12 @@
                     </label>
                 </div>
 
-                 <button id="login-button" onclick="submitLogin()" class="btn btn-warning">Login
-                 </button>
+                <input class="btn btn-warning" id="login-button" type="submit" value="Login">
+
+                {% if error %}
+                <p class="error"><strong>Error:</strong> {{ error }}</p>
+                {% endif %}
+
             </form>
             </div>
         </div>

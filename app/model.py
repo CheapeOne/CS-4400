@@ -2,7 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
     
     cursor = db.cursor()
@@ -17,17 +17,20 @@ def disconnect(db, cursor):
 
 def login_user(username, password):
     db, cursor = connect()
-
-    query = "SELECT username,password from User where username=%s and password = %s"
-    cursor = db.cursor()
-    cursor.execute(query, (username, password))
-    db.close()
-
-    if cursor.execute == "":
-        return("Login failed", "Check username and password")
+    query = "SELECT Username, Password FROM User WHERE Username = '%s' AND Password = '%s'" % (username, password)
+    cursor.execute(query)
+    row = cursor.fetchone()
+    # if username == "":
+    #     return(False, "Login Failed: Empty username field")
+    #
+    # if  == "":
+    #     return(False, "Login Failed: Empty password field")
+    #
+    # if user == "SELECT username from Users where username = user":
+    #     return(False, "Login Failed: Username taken")
 
     disconnect(db, cursor)
-
+    return row
 
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
@@ -66,13 +69,13 @@ def get_pending_officials():
 
     cursor.execute(query)
 
-    print("Results...")
+    print(cursor.fetchall())
 
     for row in cursor:
         print(row)
 
     disconnect(db, cursor)
-
+    return (True, "yay")
 
 def unpend_user(username, status):
     db, cursor = connect()
@@ -113,7 +116,7 @@ def add_point(location, timeanddate, Type, Value):
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point WHERE status = 'pending'"
+    query = "SELECT * FROM Data_Point WHERE Approved = 'pending'"
 
     cursor.execute(query)
 
@@ -159,7 +162,7 @@ def flag_location(name, status):
     cursor.execute(query, (name))
     if cursor.execute == "":
         return "doesnt exist"
-    sql = "UPDATE POI set status = status"
+    sql = "UPDATE POI set Flagged = 'status'"
     cursor.execute(sql, (status))
     print("Results...")
 
