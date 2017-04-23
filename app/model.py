@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='0ktob3r_902107*', db='cs4400db',
+                         passwd='kimo64', db='cs4400db',
                          cursorclass=pymysql.cursors.DictCursor)
     cursor = db.cursor()
     return db, cursor
@@ -167,20 +167,22 @@ def add_location(poilocation, city, state, zip):
 
 def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
-    return (True, "WOAH hey this is not actually working how about that")
+     if poi == 'No':
+        poi = '0'
+     else:
+        poi == '1'
+     db, cursor = connect()
 
-    db, cursor = connect()
+     query =  query = "SELECT * FROM POI where Location_Name='%(poi)s' AND City = '%(city)s' AND State = '%(state)s' AND,Zip_Code =  '%(zipcode)s' AND Flagged = '%(flagged)s'"%locals()
 
-    query = "SELECT * FROM POI"
+     cursor.execute(query)
 
-    cursor.execute(query)
+     print("Results...")
 
-    print("Results...")
-
-    for row in cursor:
+     for row in cursor:
         print(row)
 
-    disconnect(db, cursor)
+     disconnect(db, cursor)
 
 
 def flag_location(name, status):
