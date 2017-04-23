@@ -1,3 +1,9 @@
+// A $( document ).ready() block.
+$( document ).ready(function() {
+    addStates("#state-input");
+    addCities("#city-input");
+});
+
 $('#add-location-form').submit(false); // stop redirect
 
 function submitLocation(){

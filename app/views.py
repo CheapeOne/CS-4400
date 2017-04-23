@@ -70,11 +70,13 @@ def add_location():
 def validate_location():
     print("Adding poi location")
 
-    result = model.add_location(request.form["name"], request.form["city"], request.form["state"], request.form["zip"])
+    result = model.add_location(request.form["poi"], request.form["city"], request.form["state"], request.form["zip"])
 
     # Regardless of success or failure, keep us on the add location page and show a message.
     flash(result[1])
     return jsonify({"destination": url_for('add_location')})
+
+
 
 # These should only be accessible if you have city official authorization
 
