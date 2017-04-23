@@ -2,13 +2,10 @@ import pymysql
 
 
 def connect():
-<<<<<<< HEAD
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
-=======
-    db = pymysql.connect(host='localhost', port=3306,
-                         user='root', passwd='cheape42', db='cs4400db')
->>>>>>> b80a467c6c0ca611a3264d9f47fddd0fc22f30f9
 
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
+
+    
     cursor = db.cursor()
 
     return db, cursor
@@ -107,10 +104,10 @@ def add_point(location, timeanddate, Type, Value):
     except:
         return(False,"Please enter an integer for Data Value.")
 
-    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, DateTime) VALUES (Type, Value, location, timeanddate)"
+    query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s'"% locals()
 
     cursor.execute(query)
-    return(True, "Success")
+  
     disconnect(db, cursor)
 
 
