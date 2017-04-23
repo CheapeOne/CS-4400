@@ -217,10 +217,10 @@ def make_report(Type, valueL, valueU, time_dateL, time_dateU):
     return (True, data)
 
 
-def poi_detail(Type, ValueL, ValueU, tdL, tdU):
+def get_poi_details(Type, ValueL, ValueU, tdL, tdU):
     db, cursor = connect()
 
-    query = "SELECT * FROM DATA_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'" % locals()
+    query = "SELECT * FROM Data_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'" % locals()
 
     cursor.execute(query)
 
