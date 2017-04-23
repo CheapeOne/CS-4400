@@ -165,31 +165,29 @@ def add_location(poilocation, city, state, zip):
 
 
 
-def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
-
-     if poi == 'No':
+def search_locations(poi=None, city=None, state=None, zipcode=None, flagged=None, flagged_after=None, flagged_before=None):
+    if poi == 'No':
         poi = '0'
-     else:
+    else:
         poi == '1'
-     db, cursor = connect()
+    db, cursor = connect()
 
-     query =  query = "SELECT * FROM POI where Location_Name='%(poi)s' AND City = '%(city)s' AND State = '%(state)s' AND,Zip_Code =  '%(zipcode)s' AND Flagged = '%(flagged)s'"%locals()
+    query =  query = "(SELECT * FROM POI where Location_Name='%(poi)s') intersect (SELECT * FROM POI where City = '%(city)s')intersect(SELECT * FROM POI whereState = '%(state)s') intersect  (SELECT * FROM POI whereZip_Code =  '%(zipcode)s') (SELECT * FROM POI where Flagged = '%(flagged)s') intersect (SELECT * FROM POI where Date_Flagged < '%(flagged_before)s')  (SELECT * FROM POI where Date_Flagged > '%(flagged_after)s')"%locals()
 
-     cursor.execute(query)
+    cursor.execute(query)
 
-     print("Results...")
+    print("Results...")
 
-     for row in cursor:
+    for row in cursor:
         print(row)
 
-     disconnect(db, cursor)
+    disconnect(db, cursor)
 
 
 def flag_location(name, status):
     db, cursor = connect()
 
     query = "SELECT * FROM POI WHERE Location_Name='%(name)s'" % locals()
-
     cursor.execute(query)
     if cursor.execute == "":
         return (False, "doesnt exist")
