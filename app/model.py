@@ -4,7 +4,6 @@ import pymysql
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='cheape42', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
-
     cursor = db.cursor()
 
     return db, cursor
@@ -136,7 +135,7 @@ def add_location(name, city, state, zip):
     disconnect(db, cursor)
 
 
-def get_locations():
+def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
     return (True, "WOAH hey this is not actually working how about that")
 
