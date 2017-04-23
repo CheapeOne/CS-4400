@@ -4,6 +4,7 @@ import pymysql
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
 
+
     cursor = db.cursor()
 
     return db, cursor
@@ -80,7 +81,7 @@ def set_official_status(username, status):
     print(username, status)
 
     sql = "UPDATE City_Official SET Approved = '%(status)s' WHERE username = '%(username)s'" % locals()
-
+    print(sql)
     cursor.execute(sql)
     db.commit()
 
@@ -88,6 +89,15 @@ def set_official_status(username, status):
 
     return (True, "Unpending successful")
 
+def set_point_status(poi,time,status):
+    db, cursor = connect()
+
+    sql = "UPDATE Data_Point SET Accepted = '%(status)s' WHERE username = '%(username)s'" % locals()
+
+    cursor.execute(sql)
+    db,commit()
+    disconnect(db,cursor)
+    return(True,"done")
 
 def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
@@ -103,41 +113,34 @@ def add_point(location, timeanddate, Type, Value):
     query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
 
     cursor.execute(query)
-    db.commit()
-    disconnect(db, cursor)
 
-    return (True, "Point added!")
+    disconnect(db, cursor)
 
 
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point WHERE Accepted = 'pending'"
+    query = "SELECT * FROM Data_Point WHERE Approved = 'pending'"
 
     cursor.execute(query)
 
-    data = cursor.fetchall()
+    for row in cursor:
+        print(row)
 
     disconnect(db, cursor)
 
-    return (True, data)
 
-
-def set_point_status(location, time, status):
-    pass
-
-
-def add_location(poi, city, state, zip):
+def add_location(name, city, state, zip):
     db, cursor = connect()
-    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES ('%(poi)s', %(zip)s, '%(city)s', '%(state)s')" % locals()
+
+    query = "INSERT INTO POI (Location_Name, Zip_Code, City, State) VALUES (name, zip, city, state)"
+
     cursor.execute(query)
-    db.commit()
+
     disconnect(db, cursor)
 
-    return (True, "Location Added!")
 
-
-def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
+def get_locations():
 
     return (True, "WOAH hey this is not actually working how about that")
 
@@ -189,48 +192,18 @@ def make_report(Type, valueL, valueU, time_dateL, time_dateU):
 def poi_detail(Type,ValueL,ValueU,tdL,tdU):
     db , cursor = connect()
 
-    query = "SELECT * FFROM DATA_Point where Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'"%locals()
+    query = "SELECT * FFROM DATA_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'"%locals()
 
     cursor.execute(query)
 
     data = cursor.fetchall()
     
     disconnect(db, cursor)
-
+    
     return (True, data)
+    
 
 
-def get_states():
-    db, cursor = connect()
-    query = "SELECT DISTINCT State FROM City_State"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    disconnect(db, cursor)
-    return (True, data)
 
 
-def get_cities():
-    db, cursor = connect()
-    query = "SELECT DISTINCT City FROM City_State"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    disconnect(db, cursor)
-    return (True, data)
-
-def get_data_types():
-    db, cursor = connect()
-    query = "SELECT DISTINCT Type FROM Data_Type"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    disconnect(db, cursor)
-    return (True, data)
-
-
-def get_location_names():
-    db, cursor = connect()
-    query = "SELECT DISTINCT Location_Name FROM POI"
-    cursor.execute(query)
-    data = cursor.fetchall()
-    disconnect(db, cursor)
-    return (True, data)
-
+    
