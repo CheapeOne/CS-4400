@@ -3,7 +3,7 @@ import pymysql
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='kimo64', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
 
@@ -208,15 +208,12 @@ def flag_location(name, status):
 
 
 def make_report():
-
-    return (True, "here's the nothing")
-
+    aList = []
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point where Type = '%(Type)s' UNION SELECT * FROM Data_Point WHERE Data_Value BETWEEN '%(valueL)s' AND '%(valueU)s' UNION SELECT * from Data_Point WHERE time_date BETWEEN '%(time_dateL)s' AND '%(time_dateU)s'" % locals()
+    query = "SELECT * from (select POI_Location_Name, City, State, min(Data_Value) as min_value_mold, AVG(Data_Value) as avg_value_mold, MAX(Data_Value) as max_value_mold, COUNT(Data_Value) as count_mold, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as A natural join (select POI_Location_Name, City, State, min(Data_Value) as min_value_airquality, AVG(Data_Value) as avg_value_airquality, MAX(Data_Value) as max_value_airquality, COUNT(Data_Value) as count_airquality, Flagged from data_point join poi on data_point.POI_Location_Name = poi.Location_Name WHERE Data_Type = 'Air Quality' GROUP BY POI_Location_Name) as B"
 
     cursor.execute(query)
-
     data = cursor.fetchall()
 
     disconnect(db, cursor)
