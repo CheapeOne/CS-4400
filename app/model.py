@@ -2,7 +2,10 @@ import pymysql
 
 
 def connect():
+<<<<<<< HEAD
 
+=======
+>>>>>>> b31beac473d02b378f549fe92004e8a411e577f8
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
 
     
