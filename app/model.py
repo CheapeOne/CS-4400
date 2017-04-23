@@ -2,8 +2,7 @@ import pymysql
 
 
 def connect():
-    db = pymysql.connect(host='localhost', port=3306,
-                         user='root', passwd='cheape42', db='cs4400db')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db')
 
     cursor = db.cursor()
 
@@ -29,24 +28,18 @@ def login_user(username, password):
     disconnect(db, cursor)
 
 
-def add_user(user,emailaddress, password, confirm, Type):
+def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
     if user == "":
-        return (False, "Registration Failed: Empty User name")
+        return(False, "Registration Failed: Empty User name")
 
-    cursor.execute("SELECT Username from User")
-    userarray = cursor.fetchall()
-    userarray = [element for tupl in userarray for element in tupl] 
-    if user in userarray:
-        return (False, "Registration Failed: Username taken")
+    if user == "SELECT username from Users where username = user":
+        return(False, "Registration Failed: Username taken")
 
     if emailaddress == "":
         return(False, "Registration Failed: Empty Email")
 
-    cursor.execute("SELECT Email from User")
-    emailarray = cursor.fetchall()
-    emailarray = [element for tupl in emailarray for element in tupl]
-    if emailaddress in emailarray :
+    if emailaddress == "SELECT username from Users where email = emailaddress":
         return(False, "Registration Failed: Email taken")
 
     if password == "":
@@ -100,14 +93,19 @@ def unpend_user(username, status):
 
 def add_point(location, timeanddate, Type, Value):
     db, cursor = connect()
-
-    if type(Value) != int:
-        return("Error: Please enter an integer for Data Value.")
+    if Value == '':
+        return(False, 'Please enter value')
+    if timeanddate == '':
+        return(False, 'Please enter time and date')
+    try:
+        int(Value)
+    except:
+        return(False,"Please enter an integer for Data Value.")
 
     query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, DateTime) VALUES (Type, Value, location, timeanddate)"
 
     cursor.execute(query)
-
+    return(True, "Success")
     disconnect(db, cursor)
 
 
