@@ -1,7 +1,11 @@
 from app import app
 from app import model
+<<<<<<< Updated upstream
 import flask
 from flask import Flask, url_for, render_template, request, jsonify, flash
+=======
+from flask import Flask, url_for, render_template, request, jsonify, redirect
+>>>>>>> Stashed changes
 
 
 @app.route('/')
@@ -9,25 +13,18 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/login/')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    error = None
+    if request.method == 'POST':
+        result = model.login_user(request.form["username"], request.form["password"])
+        if result == None:
+            return render_template('login.html', error='Invalid Credentials. Please try again.')
 
+        print("This is the result:'%s'",result)
+    return render_template('login.html', error=error)
 
 @app.route('/login/validate', methods=['POST'])
-def validate_login():
-    print("Logging in a user...")
-
-    result = model.login_user(request.form["username"], request.form["password"])
-
-    if result[0]:
-        pass
-        # TODO: go to the appropriate login page for the person.
-    else:
-        # If it failed, keep us on the login page, and flask an error message
-        flash(result[1])
-        return jsonify({"destination": url_for('login')})
-
 
 @app.route('/register')
 def register():

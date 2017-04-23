@@ -17,17 +17,20 @@ def disconnect(db, cursor):
 
 def login_user(username, password):
     db, cursor = connect()
-
-    query = "SELECT username,password from User where username=%s and password = %s"
-    cursor = db.cursor()
-    cursor.execute(query, (username, password))
-    db.close()
-
-    if cursor.execute == "":
-        return("Login failed", "Check username and password")
+    query = "SELECT Username, Password FROM User WHERE Username = '%s' AND Password = '%s'" % (username, password)
+    cursor.execute(query)
+    row = cursor.fetchone()
+    # if username == "":
+    #     return(False, "Login Failed: Empty username field")
+    #
+    # if  == "":
+    #     return(False, "Login Failed: Empty password field")
+    #
+    # if user == "SELECT username from Users where username = user":
+    #     return(False, "Login Failed: Username taken")
 
     disconnect(db, cursor)
-
+    return row
 
 def add_user(emailaddress, user, password, confirm, Type):
     db, cursor = connect()
