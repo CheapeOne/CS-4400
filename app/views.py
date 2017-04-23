@@ -1,6 +1,7 @@
 from app import app
 from app import model
-from flask import Flask, url_for, render_template, request, jsonify
+import flask
+from flask import Flask, url_for, render_template, request, jsonify, flash
 
 
 @app.route('/')
@@ -34,15 +35,13 @@ def register():
 def validate_registration():
     print("Registering a user...")
 
-
-
     result = model.add_user(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"])
 
-    # TODO: redirect based on the result. If success, log them in?
-    # If failure, keep them on the registration page with an error message.
+    flash(result[1])
 
-    return jsonify({"success": result[0],"msg": result[1]})
+    flask.redirect('/register', code=302)
 
+    #return render_template('register.html')
 
 
 # These should only be accessible if you have city scientist authorization
@@ -93,9 +92,16 @@ def city_official():
     return render_template('city-official/city-official.html')
 
 
-@app.route('/city-official/search')
+@app.route('/city-official/poi-search')
 def search():
     return render_template('city-official/search.html')
+
+@app.route('/city-official/poi-search/get-results', methods=['GET'])
+def get_search_results():
+    print("hey")
+    result = model.get_locations()
+
+    return jsonify({"msg": result[1]})
 
 
 @app.route('/city-official/poi-report')
