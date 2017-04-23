@@ -5,11 +5,7 @@ import time
 
 db = pymysql.connect(host="127.0.0.1",
                      user="root",
-<<<<<<< HEAD
-                     passwd="Elite12$",
-=======
                      passwd="kimo64",
->>>>>>> 123c7299891922470f27012a628d54f5de30de77
                      db="cs4400db"
                      )
 

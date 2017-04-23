@@ -2,12 +2,7 @@ import pymysql
 
 
 def connect():
-<<<<<<< HEAD
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Elite12$', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
-=======
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='kimo64', db='cs4400db',cursorclass=pymysql.cursors.DictCursor)
-
->>>>>>> 123c7299891922470f27012a628d54f5de30de77
 
     cursor = db.cursor()
 
