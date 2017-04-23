@@ -24,12 +24,13 @@
     </a>
   </nav>
 
+  <div class="row justify-content-md-center">
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       
       {% for message in messages %}
 
-        <div class="alert">
+        <div class="col-md-6 alert alert-warning">
           <button class="close" aria-label="Close" data-dismiss="alert" type="button">
             <span aria-hidden="true">×</span>  
           </button>
@@ -39,6 +40,7 @@
       </ul>
     {% endif %}
   {% endwith %}
+  </div>
 
   <div class="container">
   <!-- Here will be placed each derived page's content (see home.html, login.html etc. -->

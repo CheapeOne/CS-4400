@@ -19,11 +19,14 @@ def validate_login():
     print("Logging in a user...")
 
     result = model.login_user(request.form["username"], request.form["password"])
-
-    # TODO: redirect based on the result. If success, log them in.
-    # If failure, keep them on the login page with an error message.
-
-    return jsonify({"msg": result[1]})
+    
+    if result[0]:
+        pass
+        # TODO: go to the appropriate login page for the person.
+    else:
+        # If it failed, keep us on the login page, and flask an error message
+        flash(result[1])
+        return jsonify({"destination": url_for('login')})
 
 
 @app.route('/register')
@@ -37,11 +40,9 @@ def validate_registration():
 
     result = model.add_user(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"])
 
+    # Regardless of success or failure, keep us on the register page and show a message.
     flash(result[1])
-
-    flask.redirect('/register', code=302)
-
-    #return render_template('register.html')
+    return jsonify({"destination": url_for('register')})
 
 
 # These should only be accessible if you have city scientist authorization
@@ -63,12 +64,9 @@ def validate_point():
 
     result = model.add_point(request.form["poi"], request.form["time"], request.form["type"], request.form["value"])
 
-    # TODO: redirect based on the result.
-    # Just refresh the add point page with a message based on 'success' or 'error'
-
-    print(result)
-
-    return jsonify({"msg": result[1]})
+    # Regardless of success or failure, keep us on the add point page and show a message.
+    flash(result[1])
+    return jsonify({"destination": url_for('add-point')})
 
 
 @app.route('/city-scientist/add-location')
@@ -80,7 +78,7 @@ def add_location():
 def validate_location():
     print("Adding poi location")
 
-    # TODO: Call method to do SQL stuff...
+    result = model.add_location(request.form["name"], request.form["city"], request.form["state"], request.form["zip"])
 
     return jsonify({"msg": result[1]})
 
