@@ -1,5 +1,6 @@
 from app import app
 from app import model
+from pprint import pprint
 from flask import Flask, url_for, render_template, request, jsonify, redirect, flash
 
 
@@ -12,12 +13,26 @@ def home():
 def login():
     error = None
     if request.method == 'POST':
-        result = model.check_user(request.form["username"], request.form["password"])
+        username = request.form["username"]
+        password = request.form["password"]
+        result = model.check_user(username, password)
         if result == None:
-            return render_template('login.html', error='Invalid Credentials. Please try again.')
-
-        print("This is the result:'%s'",result)
+            error='Invalid Credentials. Please try again.'
+        else:
+            user_type = model.get_user_type(username)
+            user_type = user_type['User_Type']
+            print(user_type)
+            if user_type == 'city official':
+                return redirect(url_for("city-official", username=username))
+            if user_type == 'city scientist':
+                return redirect(url_for("city-scientist", username=username))
+            if user_type == 'admin':
+                return redirect(url_for("admin", username=username))
     return render_template('login.html', error=error)
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 @app.route('/login/validate', methods=['POST'])
 
