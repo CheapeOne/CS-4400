@@ -167,6 +167,12 @@ def add_location(poilocation, city, state, zip):
 
 def search_locations(poi, city, state, zipcode, flagged, flagged_after=None, flagged_before=None):
 
+
+    if poi == '0':
+        poi = 'No'
+    else:
+        poi == 'Yes'
+
     return (True, "WOAH hey this is not actually working how about that")
 
     db, cursor = connect()
