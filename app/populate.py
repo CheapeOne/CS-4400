@@ -5,7 +5,11 @@ import time
 
 db = pymysql.connect(host="127.0.0.1",
                      user="root",
+<<<<<<< HEAD
                      passwd="Elite12$",
+=======
+                     passwd="kimo64",
+>>>>>>> 123c7299891922470f27012a628d54f5de30de77
                      db="cs4400db"
                      )
 
@@ -225,7 +229,7 @@ for num in range(10):
     random_time = rand.choice(random_datetimes)
     random_value = rand.randint(1, 100)
     random_type = rand.choice(data_types)
-    insert = "INSERT into Data_Point VALUES ((SELECT Location_Name FROM POI WHERE Location_Name = \"Georgia Tech\"), '%(random_time)s', '%(random_value)s', (SELECT Type from Data_Type WHERE Type = '%(random_type)s'), \"approved\")" % locals()
+    insert = "INSERT into Data_Point VALUES ((SELECT Location_Name FROM POI WHERE Location_Name = \"Georgia Tech\"), '%(random_time)s', '%(random_value)s', (SELECT Type from Data_Type WHERE Type = '%(random_type)s'), \"pending\")" % locals()
     try:
         cur.execute(insert)
     except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
@@ -234,18 +238,18 @@ for num in range(10):
         print("Error: {0}".format(e))
 
 for num in range(40):
-        random_time = rand.choice(random_datetimes)
-        random_value = rand.randint(1, 100)
-        random_type = rand.choice(data_types)
-        random_location = rand.choice(random_locations)
-        random_location_name = random_location[0]
-        insert = "INSERT into Data_Point VALUES ((SELECT Location_Name FROM POI WHERE Location_Name = '%(random_location_name)s'), '%(random_time)s', '%(random_value)s', (SELECT Type from Data_Type WHERE Type = '%(random_type)s'), \"approved\")" % locals()
-        try:
-            cur.execute(insert)
-        except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
-            print ("\nThe following query failed:")
-            print (insert)
-            print("Error: {0}".format(e))
+    random_time = rand.choice(random_datetimes)
+    random_value = rand.randint(1, 100)
+    random_type = rand.choice(data_types)
+    random_location = rand.choice(random_locations)
+    random_location_name = random_location[0]
+    insert = "INSERT into Data_Point VALUES ((SELECT Location_Name FROM POI WHERE Location_Name = '%(random_location_name)s'), '%(random_time)s', '%(random_value)s', (SELECT Type from Data_Type WHERE Type = '%(random_type)s'), \"pending\")" % locals()
+    try:
+        cur.execute(insert)
+    except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
+        print ("\nThe following query failed:")
+        print (insert)
+        print("Error: {0}".format(e))
 
 db.commit()
 db.close()

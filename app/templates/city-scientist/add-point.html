@@ -14,21 +14,19 @@
                 <div class="form-group">
                     <label for="poi-input">POI Location Name</label>
                     <select class="form-control" name="poi" id="poi-input">
-                        <option>Chattahoochee River</option>
-                        <option>(We'll grab all these from DB)</option>
+                        <!-- filled in from db -->
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="time-input">Time</label>
-                    <input type="date" name="time" class="form-control" id="time-input">
+                    <label for="time-input">Date and Time</label>
+                    <input type="datetime-local" name="time" class="form-control" id="time-input">
                 </div>
 
                 <div class="form-group">
                     <label for="type-input">Data Type</label>
                     <select class="form-control" name="type" id="type-input">
-                        <option>Mold Reading</option>
-                        <option>(We'll grab all these from DB)</option>
+                        <!-- filled in from db -->
                     </select>
                 </div>
 
@@ -48,18 +46,6 @@
 {%- endblock content %}
 
 {% block js -%}
-
-<script>
-    $(function(){           
-        $('input[type="date"]').datepicker({
-            todayHighlight: 'true'
-        });
-
-        // Default selection is today
-        $('.datepicker').datepicker("setDate", new Date());
-    });
-
-</script>
 
 <script src="{{url_for('static', filename='js/add-point.js')}}"></script>
 
