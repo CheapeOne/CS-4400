@@ -7,8 +7,57 @@
     <div class="col-md-8">
         <h1 class="black">Search Page WIP</h1>
         <hr>
-        <div class="card home-card text-center">
+        <div class="card home-card">
           <div class="card-block">
+
+            <form id="search-form">
+              
+              <div class="form-group">
+                <label for="poi-input">POI Location Name</label>
+                <select class="form-control" name="poi" id="poi-input">
+                  <!-- POIs added here from db -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="city-input">City</label>
+                <select class="form-control" name="city" id="city-input">
+                  <!-- Cities added here from db -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="state-input">State</label>
+                <select class="form-control" name="state" id="state-input">
+                  <!-- States added here from db -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="zip-input">Zip Code</label>
+                <input type="text" pattern="[0-9]{5}" name="zipcode" class="form-control" id="zip-input" placeholder="Enter the location's zip code">          
+              </div>
+            
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" name="flagged" class="form-check-input">
+                  Flagged ?
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label for="time-input">Date Flagged After</label>
+                <input type="date" name="flaggedAfter" class="form-control" id="time-input">
+              </div>
+
+              <div class="form-group">
+                <label for="time-input">Date Flagged Before</label>
+                <input type="date" name="flaggedBefore" class="form-control" id="time-input">
+              </div>
+
+              <button type="submit" class="btn btn-primary" onclick="searchPOI()">Apply Filter</button>
+            </form>  
+
           </div>
         </div>    
     </div>

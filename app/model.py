@@ -81,7 +81,7 @@ def set_official_status(username, status):
     print(username, status)
 
     sql = "UPDATE City_Official SET Approved = '%(status)s' WHERE username = '%(username)s'" % locals()
-    print(sql)
+
     cursor.execute(sql)
     db.commit()
 
@@ -111,14 +111,19 @@ def add_point(location, timeanddate, Type, Value):
 def get_pending_points():
     db, cursor = connect()
 
-    query = "SELECT * FROM Data_Point WHERE Approved = 'pending'"
+    query = "SELECT * FROM Data_Point WHERE Accepted = 'pending'"
 
     cursor.execute(query)
 
-    for row in cursor:
-        print(row)
+    data = cursor.fetchall()
 
     disconnect(db, cursor)
+
+    return (True, data)
+
+
+def set_point_status(location, time, status):
+    pass
 
 
 def add_location(name, city, state, zip):
@@ -190,11 +195,33 @@ def poi_detail(Type,ValueL,ValueU,tdL,tdU):
     data = cursor.fetchall()
     
     disconnect(db, cursor)
-    
+
     return (True, data)
-    
 
 
+def get_states():
+    db, cursor = connect()
+    query = "SELECT DISTINCT State FROM City_State"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
 
 
-    
+def get_cities():
+    db, cursor = connect()
+    query = "SELECT DISTINCT City FROM City_State"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
+
+def get_location_names():
+    db, cursor = connect()
+    query = "SELECT DISTINCT Location_Name FROM POI"
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+    return (True, data)
+
