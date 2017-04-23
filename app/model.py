@@ -25,9 +25,9 @@ def check_user(username, password):
     #
     # if  == "":
     #     return(False, "Login Failed: Empty password field")
-    #
-    # if user == "SELECT username from Users where username = user":
-    #     return(False, "Login Failed: Username taken")
+    #sql = "SELECT username from Users where '%(username)s' = user"%locals()
+    # if cursor.execute(sql) == '':
+    #     return(False, "Username or Password are wrong")
 
     disconnect(db, cursor)
     return row
@@ -152,13 +152,13 @@ def get_locations():
 def flag_location(name, status):
     db, cursor = connect()
 
-    query = "SELECT * FROM POI WHERE name = Location_Name"
+    query = "SELECT * FROM POI WHERE '%(name)s' = Location_Name"%locals()
 
-    cursor.execute(query, (name))
+    cursor.execute(query)
     if cursor.execute == "":
-        return "doesnt exist"
-    sql = "UPDATE POI set Flagged = 'status'"
-    cursor.execute(sql, (status))
+        return (False,"doesnt exist")
+    sql = "UPDATE POI set Flagged = '%(status)s'"%locals()
+    cursor.execute(sql)
     print("Results...")
 
     for row in cursor:
