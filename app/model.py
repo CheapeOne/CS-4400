@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='0ktob3r_902107*', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
     return db, cursor
@@ -30,6 +30,18 @@ def get_user_type(username):
     db, cursor = connect()
 
     query = "SELECT User_Type FROM User WHERE Username = '%(username)s'" % locals()
+    cursor.execute(query)
+    row = cursor.fetchone()
+
+    disconnect(db, cursor)
+
+    return row;
+
+
+def is_official_pending(username):
+    db, cursor = connect()
+
+    query = "SELECT Approved FROM City_Official WHERE Username = '%(username)s'" % locals()
     cursor.execute(query)
     row = cursor.fetchone()
 

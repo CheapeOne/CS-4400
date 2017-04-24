@@ -21,13 +21,21 @@ def login():
         else:
             user_type = model.get_user_type(username)
             user_type = user_type['User_Type']
-            print(user_type)
-            if user_type == 'city official':
-                return redirect(url_for("city_official", username=username))
-            if user_type == 'city scientist':
-                return redirect(url_for("city_scientist", username=username))
             if user_type == 'admin':
                 return redirect(url_for("admin", username=username))
+            else:
+                pend = model.is_official_pending(username)
+                if pend['Approved'] == 'pending':
+                    error = 'Your account is still pending approval.'
+                    return render_template('login.html', error=error)
+                if pend['Approved'] == 'rejected':
+                    error = 'Your account was rejected approval.'
+                    return render_template('login.html', error=error)
+                if user_type == 'city official':
+                    return redirect(url_for("city_official", username=username))
+                if user_type == 'city scientist':
+                    return redirect(url_for("city_scientist", username=username))
+
     return render_template('login.html', error=error)
 
 @app.route('/login/validate', methods=['POST'])
