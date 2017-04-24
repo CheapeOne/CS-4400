@@ -23,16 +23,12 @@ def login():
             user_type = user_type['User_Type']
             print(user_type)
             if user_type == 'city official':
-                return redirect(url_for("city-official", username=username))
+                return redirect(url_for("city_official", username=username))
             if user_type == 'city scientist':
-                return redirect(url_for("city-scientist", username=username))
+                return redirect(url_for("city_scientist", username=username))
             if user_type == 'admin':
                 return redirect(url_for("admin", username=username))
     return render_template('login.html', error=error)
-
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
 
 @app.route('/login/validate', methods=['POST'])
 
@@ -129,7 +125,7 @@ def poi_detail():
 @app.route('/city-official/poi-detail/details')
 def get_poi_detail():
     result = model.get_poi_details()
-    return jsonify({"report": result[1]})
+    return jsonify({"details": result[1]})
 
 @app.route('/city-official/poi-report')
 def poi_report():
