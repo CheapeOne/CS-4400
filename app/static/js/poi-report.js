@@ -1,6 +1,7 @@
 
 console.log("Getting report...");
 $.get( '/city-official/poi-report/make').done(function (data){
+    console.log(data);
     data.report.forEach(function(row){
         addReportRow(row);
     });
@@ -10,19 +11,26 @@ $.get( '/city-official/poi-report/make').done(function (data){
 });
 
 function addReportRow(row) {
+    flagged = "";
+    if(row.Flagged == 0){
+        flagged = "No";
+    } else {
+        flagged = "Yes";
+    }
+
     $("#report").append(`
         <tr>
-            <th>`+ row.Location_Name +`</th>
+            <th>`+ row.POI_Location_Name +`</th>
             <th>`+ row.City +`</th>
             <th>`+ row.State +`</th>
-            <th>`+ row.Mold_Min +`</th>
-            <th>`+ row.Mold_Avg +`</th>
-            <th>`+ row.Mold_Max +`</th>
-            <th>`+ row.AQ_Min +`</th>
-            <th>`+ row.AQ_Avg +`</th>
-            <th>`+ row.AQ_Max +`</th>
-            <th>`+ row.Num_Points +`</th>
-            <th>`+ row.Flagged +`</th>
+            <th>`+ row.min_value_mold +`</th>
+            <th>`+ row.avg_value_mold +`</th>
+            <th>`+ row.max_value_mold +`</th>
+            <th>`+ row.min_value_airquality +`</th>
+            <th>`+ row.avg_value_airquality +`</th>
+            <th>`+ row.max_value_airquality +`</th>
+            <th>`+ (row.count_airquality + row.count_mold) +`</th>
+            <th>`+ flagged +`</th>
         </tr>
     `);
 }
