@@ -36,7 +36,7 @@ CREATE TABLE Data_Point (
   Date_Time    TIMESTAMP NOT NULL,
   Data_Value      FLOAT NOT NULL,
   Data_Type     VARCHAR(100) NOT NULL,
-  Accepted    ENUM('pending', 'approved', 'rejected') NOT NULL,
+  Accepted    ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
   PRIMARY KEY (Date_Time, POI_Location_Name),
   FOREIGN KEY (POI_Location_Name) REFERENCES POI(Location_Name)
   ON DELETE CASCADE
@@ -51,7 +51,7 @@ CREATE TABLE City_Official(
   Title   VARCHAR(100) NOT NULL,
   City    VARCHAR(100) NOT NULL,
   State     VARCHAR(100) NOT NULL,
-  Approved ENUM('pending','approved','rejected'),
+  Approved ENUM('pending','approved','rejected') DEFAULT 'pending',
   PRIMARY KEY (Username),
   FOREIGN KEY (City, State) REFERENCES City_State (City, State)
   ON DELETE CASCADE
