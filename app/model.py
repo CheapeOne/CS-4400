@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='0ktob3r_902107*', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
     return db, cursor
@@ -206,26 +206,54 @@ def add_location(poilocation, city, state, zip):
 
 
 
-def search_locations(poi=None, city=None, state=None, zipcode=None, flagged=None, flagged_after=None, flagged_before=None):
-    if poi == 'No':
-        poi = '0'
-    else:
-        poi == '1'
+def search_locations(poi="", city="", state="", zipcode="", flagged="No", flagged_after="", flagged_before=""):
     db, cursor = connect()
+    print(poi, city, state, zipcode, flagged, flagged_after, flagged_before)
+    poi='Georgia Tech'
+    city='Atlanta'
+    state='Georgia'
+    zipcode='30332'
+    print(poi, city, state, zipcode, flagged, flagged_after, flagged_before)
 
-    namef = (poi if "WHERE Location_Name = '%(poi)s'" else " ") % locals()
-    cityf = (city if "WHERE City = '%(city)s'" else " ") % locals()
-    statef = (state if "WHERE State = '%(state)s'" else " ") % locals()
-    zipf = (zipcode if "WHERE Zip_Code = '%(zipcode)s'" else " ") % locals()
-    flaggedf = (flagged if "WHERE Flagged = '%(flagged)s'" else " ") % locals()
-    flaggedafterf = (flagged_after if "WHERE Date_Flagged < '%(flagged_after)s'" else " ") % locals()
-    flaggedbeforef = (city if "WHERE Date_Flagged > '%(flagged_before)s'" else " ") % locals()
+    filter_list = []
 
-    query = "SELECT * FROM POI" + namef + cityf + statef + zipf + flaggedf + flaggedafterf + flaggedbefore
+    if (poi != ""):
+        poi = "WHERE Location_Name = '%(poi)s'" % locals()
+        filter_list.append(poi)
+
+    if (city != ""):
+        city = "WHERE City = '%(city)s'" % locals()
+        filter_list.append(city)
+
+    if (state != ""):
+        state = "WHERE State = '%(state)s'" % locals()
+        filter_list.append(state)
+
+    if (zipcode != ""):
+        zipcode = "WHERE Zip_Code = '%(zipcode)s'" % locals()
+        filter_list.append(zipcode)
+
+    if (flagged!= 'No'):
+        flagged = "WHERE Flagged = 0" % locals()
+    else:
+        flagged = "WHERE Flagged = 1" % locals()
+    filter_list.append(flagged)
+
+    if (flagged_after != ""):
+        flagged_after = "WHERE Date_Flagged < '%(flagged_after)s'" % locals()
+        filter_list.append(flagged_after)
+
+    if (flagged_before != ""):
+        flagged_before = "WHERE Date_Flagged > '%(flagged_before)s'" % locals()
+        filter_list.append(flagged_before)
+
+    query = "SELECT * FROM POI " + filter_list[0]
+    for index in range(1,len(filter_list)):
+        query = query + " AND " + filter_list[index]
+
+    print(query)
 
     cursor.execute(query)
-
-    print("Results...")
 
     for row in cursor:
         print(row)
@@ -242,7 +270,7 @@ def flag_location(name, status):
         return (False, "doesnt exist")
     sql = "UPDATE POI set Flagged = '%(status)s'" % locals()
     cursor.execute(sql)
-    
+
     db.commit()
 
     disconnect(db, cursor)

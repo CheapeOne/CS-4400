@@ -3,6 +3,10 @@ from app import model
 from pprint import pprint
 from flask import Flask, url_for, render_template, request, jsonify, redirect, flash
 
+@app.route('/test')
+def test():
+    search = model.search_locations()
+    return "hi";
 
 @app.route('/')
 def home():
@@ -120,12 +124,12 @@ def search():
     return render_template('city-official/search.html')
 
 
-@app.route('/city-official/poi-search/get-results')
-def get_search_results():
-
-    result = model.search_locations(request.args.get('poi', None), request.args.get('city', None), request.args.get('state', None), request.args.get('zipcode', None), request.args.get('flagged', None), request.args.get('flagged-after', None), request.args.get('flagged-before', None))
-
-    return jsonify({"msg": result[1]})
+# @app.route('/city-official/poi-search/get-results')
+# def get_search_results():
+#
+#     result = model.search_locations(request.args.get('poi', None), request.args.get('city', None), request.args.get('state', None), request.args.get('zipcode', None), request.args.get('flagged', None), request.args.get('flagged-after', None), request.args.get('flagged-before', None))
+#
+#     return jsonify({"msg": result[1]})
 
 
 @app.route('/city-official/poi-detail')
