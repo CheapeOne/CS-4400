@@ -21,7 +21,7 @@ function addInitialDataPoints(poi){
         console.log("Got initial data points!");
     }).fail(function(res){
         console.log(res.responseText);
-    });    
+    });
 }
 
 
@@ -33,7 +33,7 @@ function filterDataPoints(){
     console.log("Got report!");
     }).fail(function(res){
         console.log(res.responseText);
-    });    
+    });
 }
 
 
