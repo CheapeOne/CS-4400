@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='Elite12$', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
     return db, cursor
@@ -55,14 +55,8 @@ def add_user(user, emailaddress, password, confirm, Type):
     if user == "":
         return(False, "Registration Failed: Empty User name")
 
-    if user == "SELECT username from Users where username = user":
-        return(False, "Registration Failed: Username taken")
-
     if emailaddress == "":
         return(False, "Registration Failed: Empty Email")
-
-    if emailaddress == "SELECT username from Users where email = emailaddress":
-        return(False, "Registration Failed: Email taken")
 
     if password == "":
         return(False, "Registration Failed: You must enter a password.")
@@ -70,10 +64,13 @@ def add_user(user, emailaddress, password, confirm, Type):
     if password != confirm:
         return(False, "Registration Failed: Password does not match confirmation")
 
-    query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+    try:
+        query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+        cursor.execute(query)
+        db.commit()
+    except:
+        return(False, "Registration Failed: There was a problem with your registration.")
 
-    cursor.execute(query)
-    db.commit()
 
     disconnect(db, cursor)
 
@@ -85,14 +82,8 @@ def add_official(user, emailaddress, password, confirm, Type, title, city, state
     if user == "":
         return(False, "Registration Failed: Empty User name")
 
-    if user == "SELECT DISTINCT username from Users where username = '%(user)s'" % locals():
-        return(False, "Registration Failed: Username taken")
-
     if emailaddress == "":
         return(False, "Registration Failed: Empty Email")
-
-    if emailaddress == "SELECT username from Users where email = emailaddress":
-        return(False, "Registration Failed: Email taken")
 
     if password == "":
         return(False, "Registration Failed: You must enter a password.")
@@ -100,20 +91,19 @@ def add_official(user, emailaddress, password, confirm, Type, title, city, state
     if password != confirm:
         return(False, "Registration Failed: Password does not match confirmation")
 
-    query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
-
-    cursor.execute(query)
-
-    if user == "SELECT username from Users where username = user":
-        return(False, "Registration Failed: Username taken")
-
     if title == "":
         return(False, "Registration Failed: Empty Title")
-
-    query = "INSERT INTO City_Official (Username, Title, City, State, Approved) VALUES ((SELECT Username from User where Username = '%(user)s'), '%(title)s', '%(city)s', '%(state)s', 'pending')" % locals()
-
-    cursor.execute(query)
-    db.commit()
+    query = "SELECT City,State FROM city_state WHERE city_state.City = '%(city)s' AND city_state.State = '%(state)s'" %locals()
+    if cursor.execute(query) == "":
+        return(False, "This city state combination does not exist.")
+    try:
+        query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+        cursor.execute(query)
+        query = "INSERT INTO City_Official (Username, Title, City, State, Approved) VALUES ((SELECT Username from User where Username = '%(user)s'), '%(title)s', '%(city)s', '%(state)s', 'pending')" % locals()
+        cursor.execute(query)
+        db.commit()
+    except:
+        return(False, "Registration Failed: There was a problem with your registration.")
 
     disconnect(db, cursor)
 
