@@ -102,10 +102,10 @@ def search():
     return render_template('city-official/search.html')
 
 
-@app.route('/city-official/poi-search/get-results', defaults={'poi': None, 'city': None, 'state': None, 'zipcode': None, 'flagged': 0, 'flagged-after': None, "flagged-before": None})
+@app.route('/city-official/poi-search/get-results')
 def get_search_results():
 
-    result = model.search_locations(request.form["poi"], request.form["city"], request.form["state"], request.form["zipcode"], request.form["flagged"], request.form["flagged-after"], request.form["flagged-before"])
+    result = model.search_locations(request.args.get('poi', None), request.args.get('city', None), request.args.get('state', None), request.args.get('zipcode', None), request.args.get('flagged', None), request.args.get('flagged-after', None), request.args.get('flagged-before', None))
 
     return jsonify({"msg": result[1]})
 
