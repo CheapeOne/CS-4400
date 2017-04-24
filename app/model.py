@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='0ktob3r_902107*', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
     return db, cursor
@@ -164,7 +164,7 @@ def add_point(location, timeanddate, Type, Value):
     query = "INSERT INTO Data_Point (Data_Type, Data_Value, POI_Location_Name, Date_Time) VALUES ('%(Type)s', '%(Value)s', '%(location)s', '%(timeanddate)s')" % locals()
 
     cursor.execute(query)
-
+    db.commit()
     disconnect(db, cursor)
 
     return (True, "Point added!")
@@ -211,42 +211,80 @@ def search_locations(poi="", city="", state="", zipcode="", flagged="No", flagge
 
     filter_list = []
     if (poi != ""):
-        poi = "WHERE Location_Name = '%(poi)s'" % locals()
+        poi = "Location_Name = '%(poi)s'" % locals()
         filter_list.append(poi)
 
     if (city != ""):
-        city = "WHERE City = '%(city)s'" % locals()
+        city = "City = '%(city)s'" % locals()
         filter_list.append(city)
 
     if (state != ""):
-        state = "WHERE State = '%(state)s'" % locals()
+        state = "State = '%(state)s'" % locals()
         filter_list.append(state)
 
     if (zipcode != ""):
-        zipcode = "WHERE Zip_Code = '%(zipcode)s'" % locals()
+        zipcode = "Zip_Code = '%(zipcode)s'" % locals()
         filter_list.append(zipcode)
 
     if (flagged!= 'No'):
-        flagged = "WHERE Flagged = 0" % locals()
+        flagged = "Flagged = 0" % locals()
     else:
-        flagged = "WHERE Flagged = 1" % locals()
+        flagged = "Flagged = 1" % locals()
     filter_list.append(flagged)
 
     if (flagged_after != ""):
-        flagged_after = "WHERE Date_Flagged < '%(flagged_after)s'" % locals()
+        flagged_after = "Date_Flagged < '%(flagged_after)s'" % locals()
         filter_list.append(flagged_after)
 
     if (flagged_before != ""):
-        flagged_before = "WHERE Date_Flagged > '%(flagged_before)s'" % locals()
+        flagged_before = "Date_Flagged > '%(flagged_before)s'" % locals()
         filter_list.append(flagged_before)
 
-    query = "SELECT * FROM POI " + filter_list[0]
+    query = "SELECT * FROM POI WHERE " + filter_list[0]
     for index in range(1,len(filter_list)):
         query = query + " AND " + filter_list[index]
 
     cursor.execute(query)
     disconnect(db, cursor)
 
+    data = cursor.fetchall()
+    return (True, data)
+
+def search_details(poi="", data_type="", value_from="", value_to="", datetime_from="", datetime_to=""):
+    db, cursor = connect()
+    print(data_type, value_from, value_to, datetime_from, datetime_to)
+    filter_list = []
+    if (data_type != ""):
+        data_type = "Data_Type = '%(data_type)s'" % locals()
+        filter_list.append(data_type)
+ 
+    if (value_from != ""):
+        value_from = "Data_Value >= '%(value_from)s'" % locals()
+        filter_list.append(value_from)
+ 
+    if (value_to != ""):
+        value_to = "Data_Value <= '%(value_to)s'" % locals()
+        filter_list.append(value_to)
+ 
+    if (datetime_from != ""):
+        datetime_from = "Date_Time >= '%(datetime_from)s'" % locals()
+        filter_list.append(datetime_from)
+ 
+    if (datetime_to != ""):
+        datetime_to = "Date_time <= '%(datetime_to)s'" % locals()
+        filter_list.append(datetime_to)
+
+    query = "SELECT * FROM Data_Point WHERE POI_Location_Name = '%(poi)s'" % locals()
+    if len(filter_list) != 0:
+        query = query + " AND " + filter_list[0]
+        for index in range(1,len(filter_list)):
+            query = query + " AND " + filter_list[index]
+    
+    print(query)
+
+    cursor.execute(query)
+    disconnect(db, cursor)
+ 
     data = cursor.fetchall()
     return (True, data)
 

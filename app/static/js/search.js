@@ -3,8 +3,6 @@ $( document ).ready(function() {
     addStates("#state-input");
     addCities("#city-input");
     addLocations("#poi-input");
-
-    $('#search-table').DataTable();
 });
 
 function searchPOI(){
@@ -14,23 +12,31 @@ function searchPOI(){
         return $(element).val() != "";
     }).serialize()).done(function (data){
         console.log(data)
-        data.results.forEach(function(poi){
+
+        $(".result").remove();
+
+        data.msg.forEach(function(poi){
             addSearchResult(poi);
         });
+
+        $('#search-table').DataTable();
     }).fail(function(res){
         console.log(res.responseText);
     });   
 }
 
 function addSearchResult(poi) {
+
+    flagged = poi.Flagged ? "Yes" : "No";
+
     $("#search-results").append(`
-        <tr>
-            <th>`+ row.Location_Name +`</th>
-            <th>`+ row.City +`</th>
-            <th>`+ row.State +`</th>
-            <th>`+ row.Zip_Code +`</th>
-            <th>`+ row.Flagged +`</th>
-            <th>`+ row.Date_Flagged +`</th>
+        <tr class="result">
+        <th> <a href="/city-official/poi-detail?poi=`+ poi.Location_Name +`">`+ poi.Location_Name +`</a></th>
+            <th>`+ poi.City +`</th>
+            <th>`+ poi.State +`</th>
+            <th>`+ poi.Zip_Code +`</th>
+            <th>`+ flagged +`</th>
+            <th>`+ poi.Date_Flagged +`</th>
         </tr>
     `);
 }

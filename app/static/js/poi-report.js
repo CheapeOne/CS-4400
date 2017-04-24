@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-    $('#report-table').DataTable();
+    
 });
 
 console.log("Getting report...");
@@ -9,6 +9,9 @@ $.get( '/city-official/poi-report/make').done(function (data){
     data.report.forEach(function(row){
         addReportRow(row);
     });
+
+    $('#report-table').DataTable();
+    
     console.log("Got report!");
 }).fail(function(res){
     console.log(res.responseText);

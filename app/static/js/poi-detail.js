@@ -14,8 +14,6 @@ $( document ).ready(function() {
     addDataTypes("#type-input");
 
     checkFlagged(poi);
-
-    $('#detail-table').DataTable();
 });
 
 function checkFlagged(poi) {
@@ -63,17 +61,27 @@ function addInitialDataPoints(poi){
     console.log("Getting initial data points...");
     $.get( '/city-official/poi-detail/all?poi='+poi).done(function (data){
         console.log(data);
+
+        $(".result").remove();
+
         data.points.forEach(function(point){
             addDetailRow(point);
         });
         console.log("Got initial data points!");
+
+        $('#detail-table').DataTable();
     }).fail(function(res){
         console.log(res.responseText);
     });
 }
 
 function filterDataPoints(){
-    $.get( '/city-official/poi-detail/details').done(function (data){
+    $.get( '/city-official/poi-detail/details?poi=' + poi , $("#search-form :input[value!='']").filter(function(index, element) {
+        return $(element).val() != "";
+    })).done(function (data){
+
+    $(".result").remove();
+
     data.points.forEach(function(point){
         addDetailRow(point);
     });
@@ -81,12 +89,14 @@ function filterDataPoints(){
     }).fail(function(res){
         console.log(res.responseText);
     });
+
+    $('#detail-table').DataTable();
 }
 
 
 function addDetailRow(point) {
     $("#detail").append(`
-        <tr>
+        <tr class="result">
             <th>`+ point.Data_Type +`</th>
             <th>`+ point.Data_Value +`</th>
             <th>`+ point.Date_Time +`</th>

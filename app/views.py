@@ -28,6 +28,8 @@ def login():
             user_type = user_type['User_Type']
             if user_type == 'admin':
                 return redirect(url_for("admin", username=username))
+            elif user_type == 'city scientist':
+                return redirect(url_for("city_scientist", username=username))
             else:
                 pend = model.is_official_pending(username)
                 if pend['Approved'] == 'pending':
@@ -146,7 +148,7 @@ def poi_detail():
 
 @app.route('/city-official/poi-detail/details')
 def get_poi_detail():
-    result = model.get_poi_detail(request.args.get('type', None), request.args.get('data-greater', None), request.args.get('data-lesser', None), request.args.get('date-after', None), request.args.get('date-before', None))
+    result = model.search_details(request.args.get('poi', ""), request.args.get('type', ""), request.args.get('data-greater', ""), request.args.get('data-lesser', ""), request.args.get('date-after', ""), request.args.get('date-before', ""))
     return jsonify({"points": result[1]})
 
 @app.route('/city-official/poi-detail/all')
