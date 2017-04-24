@@ -192,7 +192,7 @@ except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalE
     print("Error: {0}".format(e))
 
 try:
-    cur.execute("INSERT INTO POI VALUES ('Emory', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30322', 0, NULL)")
+    cur.execute("INSERT INTO POI VALUES ('Emory University', (SELECT DISTINCT City FROM City_State WHERE City = 'Atlanta'), (SELECT DISTINCT State FROM City_State WHERE State = 'Georgia'), '30322', 0, NULL)")
 except (pymysql.err.DataError, pymysql.err.IntegrityError, pymysql.err.InternalError) as e:
     print("Error: {0}".format(e))
 
