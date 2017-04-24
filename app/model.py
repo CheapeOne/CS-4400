@@ -208,15 +208,8 @@ def add_location(poilocation, city, state, zip):
 
 def search_locations(poi="", city="", state="", zipcode="", flagged="No", flagged_after="", flagged_before=""):
     db, cursor = connect()
-    print(poi, city, state, zipcode, flagged, flagged_after, flagged_before)
-    poi='Georgia Tech'
-    city='Atlanta'
-    state='Georgia'
-    zipcode='30332'
-    print(poi, city, state, zipcode, flagged, flagged_after, flagged_before)
 
     filter_list = []
-
     if (poi != ""):
         poi = "WHERE Location_Name = '%(poi)s'" % locals()
         filter_list.append(poi)
@@ -251,14 +244,11 @@ def search_locations(poi="", city="", state="", zipcode="", flagged="No", flagge
     for index in range(1,len(filter_list)):
         query = query + " AND " + filter_list[index]
 
-    print(query)
-
     cursor.execute(query)
-
-    for row in cursor:
-        print(row)
-
     disconnect(db, cursor)
+
+    data = cursor.fetchall()
+    return (True, data)
 
 
 def flag_location(name, status):

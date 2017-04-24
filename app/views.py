@@ -8,6 +8,12 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/test')
+def test():
+    search = model.search_locations()
+    return hi;
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
