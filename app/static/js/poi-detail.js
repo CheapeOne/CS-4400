@@ -1,7 +1,10 @@
+
+var poi = "";
+
 // A $( document ).ready() block.
 $( document ).ready(function() {
 
-    var poi = getParameterByName("poi");
+    poi = getParameterByName("poi");
     console.log(poi);
 
     $("#poi-name").text("POI Details: " + poi);
@@ -9,7 +12,52 @@ $( document ).ready(function() {
     addInitialDataPoints(poi);
 
     addDataTypes("#type-input");
+
+    checkFlagged(poi);
+
+    $('#detail-table').DataTable();
 });
+
+function checkFlagged(poi) {
+    var isFlagged = getIsFlagged(poi);
+
+    if(isFlagged){
+        $("#flag-button").hide();
+    } else {
+        $("#unflag-button").hide();
+    }
+}
+
+function getIsFlagged(poi){
+    console.log("Getting is flagged...");
+    $.get( '/city-official/poi-detail/is-flagged?poi='+poi).done(function (data){
+        console.log("Got is flagged ");
+        console.log(data.flagged[0].Flagged);
+        return data.flagged[0].Flagged;
+    }).fail(function(res){
+        console.log(res.responseText);
+    });     
+}
+
+function flagPOI(flagged){
+    console.log("Setting is flagged...");
+    $.get( '/city-official/poi-detail/set-flagged?poi='+poi+"&flagged="+flagged).done(function (data){
+        console.log("Set is flagged ");
+        console.log(data.flagged[0].Flagged);
+        
+        if(flagged){
+            //if we just flagged, hide the flag button and show the unflag button
+            $("#flag-button").hide();
+            $("#unflag-button").show();
+        } else {
+            $("#flag-button").show();
+            $("#unflag-button").hide();
+        }
+
+    }).fail(function(res){
+        console.log(res.responseText);
+    }); 
+} 
 
 function addInitialDataPoints(poi){
     console.log("Getting initial data points...");
@@ -23,7 +71,6 @@ function addInitialDataPoints(poi){
         console.log(res.responseText);
     });
 }
-
 
 function filterDataPoints(){
     $.get( '/city-official/poi-detail/details').done(function (data){

@@ -3,6 +3,8 @@ $( document ).ready(function() {
     addStates("#state-input");
     addCities("#city-input");
     addLocations("#poi-input");
+
+    $('#search-table').DataTable();
 });
 
 function searchPOI(){

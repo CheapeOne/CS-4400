@@ -40,12 +40,12 @@
 
               <a class="btn btn-primary" onclick="filterDataPoints()">Apply Filter</a>
 
-              <a id="flag-button" class="btn btn-primary" onclick="flagPOI()">Flag POI</a>
+              <a id="flag-button" class="btn btn-primary" onclick="flagPOI(1)">Flag POI</a>
 
-              <a id="unflag-button" class="btn btn-primary" onclick="unflagPOI()">Unflag POI</a>
+              <a id="unflag-button" class="btn btn-primary" onclick="flagPOI(0)">Unflag POI</a>
             </form>
 
-            <table class="table">
+            <table id="detail-table" class="table">
                 <thead>
                     <tr>
                         <th>Data Type</th>

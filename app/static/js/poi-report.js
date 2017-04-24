@@ -1,4 +1,8 @@
 
+$(document).ready(function() {
+    $('#report-table').DataTable();
+});
+
 console.log("Getting report...");
 $.get( '/city-official/poi-report/make').done(function (data){
     console.log(data);

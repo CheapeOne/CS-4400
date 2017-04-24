@@ -212,10 +212,8 @@ def flag_location(name, status):
         return (False, "doesnt exist")
     sql = "UPDATE POI set Flagged = '%(status)s'" % locals()
     cursor.execute(sql)
-    print("Results...")
-
-    for row in cursor:
-        print(row)
+    
+    db.commit()
 
     disconnect(db, cursor)
 
@@ -233,7 +231,7 @@ def make_report():
     return (True, data)
 
 
-def get_poi_details(Type, ValueL, ValueU, tdL, tdU):
+def get_poi_details(Type=None, ValueL=None, ValueU=None, tdL=None, tdU=None):
     db, cursor = connect()
 
     query = "SELECT * FROM Data_Point where Data_Type = '%(Type)s' AND Data_Value BETWEEN '%(ValueL)s' AND '%(ValueU)s' AND time_date BETWEEN '%(tdL)s' AND '%(tdU)s'" % locals()
@@ -245,6 +243,29 @@ def get_poi_details(Type, ValueL, ValueU, tdL, tdU):
     disconnect(db, cursor)
 
     return (True, data)
+
+def get_is_flagged(poi=None):
+    db, cursor = connect()
+
+    query = "SELECT Flagged FROM POI where Location_Name = '%(poi)s'" % locals()
+
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+
+    return (True, data)
+
+def set_is_flagged(poi=None, flagged=None):
+    db, cursor = connect()
+
+    query = "UPDATE POI set Flagged = '%(flagged)s'" % locals()
+
+    cursor.execute(query)
+    db.commit()
+    disconnect(db, cursor)
+
+    return (True, "Set POI flag!")
+
 
 def get_poi_points(poi):
     db, cursor = connect()

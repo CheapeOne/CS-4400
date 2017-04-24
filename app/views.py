@@ -53,7 +53,7 @@ def validate_registration():
 
     # Regardless of success or failure, keep us on the register page and show a message.
     flash(result[1])
-    return jsonify({"destination": url_for('register')})
+    return jsonify({"destination": '/register'})
 
 
 # These should only be accessible if you have city scientist authorization
@@ -131,6 +131,17 @@ def get_poi_detail():
 def get_poi_points():
     result = model.get_poi_points(request.args.get('poi'))
     return jsonify({"points": result[1]})
+
+@app.route('/city-official/poi-detail/is-flagged')
+def get_is_flagged():
+    result = model.get_is_flagged(request.args.get('poi'))
+    return jsonify({"flagged": result[1]})
+
+@app.route('/city-official/poi-detail/set-flagged')
+def set_is_flagged():
+    result = model.set_is_flagged(request.args.get('poi'), request.args.get('flagged'))
+    flash(result[1])
+    return jsonify({"flagged": result[1]})
 
 @app.route('/city-official/poi-report')
 def poi_report():
