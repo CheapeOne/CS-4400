@@ -135,6 +135,7 @@ def get_search_results():
                                     request.args.get('flagged', ""),
                                     request.args.get('flagged-after', ""),
                                     request.args.get('flagged-before', "")
+                                    )
 
     return jsonify({"msg": result[1]})
 
