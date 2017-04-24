@@ -183,13 +183,13 @@ def search_locations(poi=None, city=None, state=None, zipcode=None, flagged=None
         poi == '1'
     db, cursor = connect()
 
-    namef = (poi ? "WHERE Location_Name = '%(poi)s'" : " ") % locals()
-    cityf = (city ? "WHERE City = '%(city)s'" : " ") % locals()
-    statef = (state ? "WHERE State = '%(state)s'" : " ") % locals()
-    zipf = (zipcode ? "WHERE Zip_Code = '%(zipcode)s'" : " ") % locals()
-    flaggedf = (flagged ? "WHERE Flagged = '%(flagged)s'" : " ") % locals()
-    flaggedafterf = (flagged_after ? "WHERE Date_Flagged < '%(flagged_after)s'" : " ") % locals()
-    flaggedbeforef = (city ? "WHERE Date_Flagged > '%(flagged_before)s'" : " ") % locals()
+    namef = (poi if "WHERE Location_Name = '%(poi)s'" else " ") % locals()
+    cityf = (city if "WHERE City = '%(city)s'" else " ") % locals()
+    statef = (state if "WHERE State = '%(state)s'" else " ") % locals()
+    zipf = (zipcode if "WHERE Zip_Code = '%(zipcode)s'" else " ") % locals()
+    flaggedf = (flagged if "WHERE Flagged = '%(flagged)s'" else " ") % locals()
+    flaggedafterf = (flagged_after if "WHERE Date_Flagged < '%(flagged_after)s'" else " ") % locals()
+    flaggedbeforef = (city if "WHERE Date_Flagged > '%(flagged_before)s'" else " ") % locals()
 
     query = "SELECT * FROM POI" + namef + cityf + statef + zipf + flaggedf + flaggedafterf + flaggedbefore
 
