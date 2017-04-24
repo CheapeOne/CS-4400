@@ -11,6 +11,7 @@ function searchPOI(){
     $.get('/city-official/poi-search/get-results', $("#search-form :input[value!='']").filter(function(index, element) {
         return $(element).val() != "";
     }).serialize()).done(function (data){
+        console.log(data)
         data.results.forEach(function(poi){
             addSearchResult(poi);
         });
