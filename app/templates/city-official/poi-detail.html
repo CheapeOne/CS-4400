@@ -9,7 +9,7 @@
         <br>
 
         <form id="search-form">
-              
+
               <div class="form-group">
                 <label for="type-input">Type</label>
                 <select class="form-control" name="type" id="type-input">
@@ -39,6 +39,10 @@
               </div>
 
               <a class="btn btn-primary" onclick="filterDataPoints()">Apply Filter</a>
+
+              <a id="flag-button" class="btn btn-primary" onclick="flagPOI()">Flag POI</a>
+
+              <a id="unflag-button" class="btn btn-primary" onclick="unflagPOI()">Unflag POI</a>
             </form>
 
             <table class="table">
