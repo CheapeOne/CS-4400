@@ -14,7 +14,6 @@ function addPendingPoint(point) {
 
     datetime_string = convertDateForSQL(point.Date_Time);
 
-    console.log(date);
     $("#pending-points").append(`
         <tr>
             <th>` + point.POI_Location_Name + `</th>
