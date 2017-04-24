@@ -45,11 +45,21 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/register/validate', methods=['POST'])
-def validate_registration():
+@app.route('/register/scientist/validate', methods=['POST'])
+def validate_scientist():
     print("Registering a user...")
 
     result = model.add_user(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"])
+
+    # Regardless of success or failure, keep us on the register page and show a message.
+    flash(result[1])
+    return jsonify({"destination": '/register'})
+
+@app.route('/register/official/validate', methods=['POST'])
+def validate_official():
+    print("Registering a user...")
+
+    result = model.add_official(request.form["username"], request.form["email"], request.form["password"], request.form["confirm"], request.form["type"], request.form["title"], request.form["city"], request.form["state"])
 
     # Regardless of success or failure, keep us on the register page and show a message.
     flash(result[1])

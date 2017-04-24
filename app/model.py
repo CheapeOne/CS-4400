@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, jsonify, redirect, f
 
 def connect():
     db = pymysql.connect(host='localhost', port=3306, user='root',
-                         passwd='0ktob3r_902107*', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
+                         passwd='cheape42', db='cs4400db', cursorclass=pymysql.cursors.DictCursor)
 
     cursor = db.cursor()
     return db, cursor
@@ -50,7 +50,7 @@ def is_official_pending(username):
     return row;
 
 
-def add_user(emailaddress, user, password, confirm, Type):
+def add_user(user, emailaddress, password, confirm, Type):
     db, cursor = connect()
     if user == "":
         return(False, "Registration Failed: Empty User name")
@@ -71,6 +71,46 @@ def add_user(emailaddress, user, password, confirm, Type):
         return(False, "Registration Failed: Password does not match confirmation")
 
     query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+
+    cursor.execute(query)
+    db.commit()
+
+    disconnect(db, cursor)
+
+    return (True, "Registration Successful!")
+
+def add_official(user, emailaddress, password, confirm, Type, title, city, state):
+
+    db, cursor = connect()
+    if user == "":
+        return(False, "Registration Failed: Empty User name")
+
+    if user == "SELECT DISTINCT username from Users where username = '%(user)s'" % locals():
+        return(False, "Registration Failed: Username taken")
+
+    if emailaddress == "":
+        return(False, "Registration Failed: Empty Email")
+
+    if emailaddress == "SELECT username from Users where email = emailaddress":
+        return(False, "Registration Failed: Email taken")
+
+    if password == "":
+        return(False, "Registration Failed: You must enter a password.")
+
+    if password != confirm:
+        return(False, "Registration Failed: Password does not match confirmation")
+
+    query = "INSERT INTO User (Email, Username, Password, User_Type) VALUES ('%(emailaddress)s', '%(user)s', '%(password)s', '%(Type)s')" % locals()
+
+    cursor.execute(query)
+
+    if user == "SELECT username from Users where username = user":
+        return(False, "Registration Failed: Username taken")
+
+    if title == "":
+        return(False, "Registration Failed: Empty Title")
+
+    query = "INSERT INTO City_Official (Username, Title, City, State, Approved) VALUES ((SELECT Username from User where Username = '%(user)s'), '%(title)s', '%(city)s', '%(state)s', 'pending')" % locals()
 
     cursor.execute(query)
     db.commit()
