@@ -242,6 +242,15 @@ def get_poi_details(Type, ValueL, ValueU, tdL, tdU):
 
     return (True, data)
 
+def get_poi_points(poi):
+    db, cursor = connect()
+    query = "SELECT * FROM Data_Point where POI_Location_Name = '%(poi)s'" % locals()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    disconnect(db, cursor)
+
+    return (True, data)
+
 def get_states():
     db, cursor = connect()
     query = "SELECT DISTINCT State FROM City_State"

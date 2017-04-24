@@ -5,28 +5,55 @@
 <div class="row justify-content-md-center">
 
     <div class="col-md-12">
-        <h1 class="black">POI Detail</h1>
+        <h1 class="black" id="poi-name">POI Detail</h1>
         <br>
 
-        <div class="card">
-          <div class="card-block">
-            <h4 class="card-title"></h4>
+        <form id="search-form">
+              
+              <div class="form-group">
+                <label for="type-input">Type</label>
+                <select class="form-control" name="type" id="type-input">
+                  <option></option>
+                  <!-- POIs added here from db -->
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="data-greater-input">Data Value Greater Than</label>
+                <input type="text" name="data-greater" class="form-control" id="data-greater-input">
+              </div>
+
+              <div class="form-group">
+                <label for="data-lesser-input">Date Value Less Than</label>
+                <input type="text" name="data-lesser" class="form-control" id="data-lesser-input">
+              </div>
+
+              <div class="form-group">
+                <label for="time-input">Date After</label>
+                <input type="date" name="date-after" class="form-control" id="time-input">
+              </div>
+
+              <div class="form-group">
+                <label for="time-input">Date Before</label>
+                <input type="date" name="date-before" class="form-control" id="time-input">
+              </div>
+
+              <a class="btn btn-primary" onclick="filterDataPoints()">Apply Filter</a>
+            </form>
+
             <table class="table">
                 <thead>
                     <tr>
                         <th>Data Type</th>
                         <th>Data Value</th>
                         <th>Date/Time of Reading</th>
-                        <th>Flagged?</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="detail">
                     <!-- We for loop through this part after getting DB response -->
                 </tbody>
             </table>
-          </div>
-        </div>
+
     </div>
 </div>
 

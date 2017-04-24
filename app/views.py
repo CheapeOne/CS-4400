@@ -124,8 +124,13 @@ def poi_detail():
 
 @app.route('/city-official/poi-detail/details')
 def get_poi_detail():
-    result = model.get_poi_details()
-    return jsonify({"details": result[1]})
+    result = model.get_poi_detail(request.args.get('type', None), request.args.get('data-greater', None), request.args.get('data-lesser', None), request.args.get('date-after', None), request.args.get('date-before', None))
+    return jsonify({"points": result[1]})
+
+@app.route('/city-official/poi-detail/all')
+def get_poi_points():
+    result = model.get_poi_points(request.args.get('poi'))
+    return jsonify({"points": result[1]})
 
 @app.route('/city-official/poi-report')
 def poi_report():
